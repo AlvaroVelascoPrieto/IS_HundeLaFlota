@@ -29,15 +29,15 @@ public class InterfazJuego extends JFrame implements Observer{
 	private JPanel panelTableroCont;
 	private JPanel panelAcciones;
 	private JPanel panelColocacionBarco;
-	private JPanel panelTamañoBarco;
+	private JPanel panelTamanoBarco;
 	private JPanel panelDireccionBarco;
-	private JRadioButton botonTamaño1;
-	private JRadioButton botonTamaño2;
-	private JRadioButton botonTamaño3;
-	private JRadioButton botonTamaño4;
+	private JRadioButton botonTamano1;
+	private JRadioButton botonTamano2;
+	private JRadioButton botonTamano3;
+	private JRadioButton botonTamano4;
 	private JRadioButton botonHorizantal;
 	private JRadioButton botonVertical;
-	ButtonGroup grupoTamaño = new ButtonGroup();
+	ButtonGroup grupoTamano = new ButtonGroup();
 	ButtonGroup grupoDireccion = new ButtonGroup();
 	private JPanel panelTienda;
 	
@@ -94,18 +94,18 @@ public class InterfazJuego extends JFrame implements Observer{
 		panelAcciones.add(panelColocacionBarco);
 		panelColocacionBarco.setLayout(new GridLayout(1,2,0,0));
 		
-		this.panelTamañoBarco = new JPanel();
-		panelColocacionBarco.add(panelTamañoBarco);
-		panelTamañoBarco.setLayout(new GridLayout(5,1,0,0));
-		panelTamañoBarco.add(new JLabel("TAMAÑO"));
-		panelTamañoBarco.add(getbotonTamaño1());
-		panelTamañoBarco.add(getbotonTamaño2());
-		panelTamañoBarco.add(getbotonTamaño3());
-		panelTamañoBarco.add(getbotonTamaño4());
-		grupoTamaño.add(botonTamaño1);
-		grupoTamaño.add(botonTamaño2);
-		grupoTamaño.add(botonTamaño3);
-		grupoTamaño.add(botonTamaño4);
+		this.panelTamanoBarco = new JPanel();
+		panelColocacionBarco.add(panelTamanoBarco);
+		panelTamanoBarco.setLayout(new GridLayout(5,1,0,0));
+		panelTamanoBarco.add(new JLabel("TAMAnO"));
+		panelTamanoBarco.add(getbotonTamano1());
+		panelTamanoBarco.add(getbotonTamano2());
+		panelTamanoBarco.add(getbotonTamano3());
+		panelTamanoBarco.add(getbotonTamano4());
+		grupoTamano.add(botonTamano1);
+		grupoTamano.add(botonTamano2);
+		grupoTamano.add(botonTamano3);
+		grupoTamano.add(botonTamano4);
 		
 		this.panelDireccionBarco = new JPanel();
 		panelColocacionBarco.add(panelDireccionBarco);
@@ -165,32 +165,32 @@ public class InterfazJuego extends JFrame implements Observer{
 		}
 	}
 	
-	private JRadioButton getbotonTamaño1() {
-		if (botonTamaño1 == null) {
-			botonTamaño1 = new JRadioButton("1");
+	private JRadioButton getbotonTamano1() {
+		if (botonTamano1 == null) {
+			botonTamano1 = new JRadioButton("1");
 		}
-		return botonTamaño1;
+		return botonTamano1;
 	}
 	
-	private JRadioButton getbotonTamaño2() {
-		if (botonTamaño2 == null) {
-			botonTamaño2 = new JRadioButton("2");
+	private JRadioButton getbotonTamano2() {
+		if (botonTamano2 == null) {
+			botonTamano2 = new JRadioButton("2");
 		}
-		return botonTamaño2;
+		return botonTamano2;
 	}
 	
-	private JRadioButton getbotonTamaño3() {
-		if (botonTamaño3 == null) {
-			botonTamaño3 = new JRadioButton("3");
+	private JRadioButton getbotonTamano3() {
+		if (botonTamano3 == null) {
+			botonTamano3 = new JRadioButton("3");
 		}
-		return botonTamaño3;
+		return botonTamano3;
 	}
 	
-	private JRadioButton getbotonTamaño4() {
-		if (botonTamaño4 == null) {
-			botonTamaño4 = new JRadioButton("4");
+	private JRadioButton getbotonTamano4() {
+		if (botonTamano4 == null) {
+			botonTamano4 = new JRadioButton("4");
 		}
-		return botonTamaño4;
+		return botonTamano4;
 	}
 	
 	private JRadioButton getbotonHorizantal() {
