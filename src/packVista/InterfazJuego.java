@@ -54,7 +54,7 @@ public class InterfazJuego extends JFrame implements Observer{
 	
 	//Inicializa los componentes de la ventana
 	private void inicializar() {
-		setSize(755, 755);
+		setSize(1080,1080);
 		contentPanel = new JPanel();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPanel);
@@ -120,6 +120,11 @@ public class InterfazJuego extends JFrame implements Observer{
 		this.panelTienda = new JPanel();
 		panelAcciones.add(panelTienda);
 		panelAcciones.add(new JButton("Hola"));
+		
+		
+		//int i= Integer.parseInt(botonTamano3.getText());
+		
+		
 		
 		
 	}	
@@ -206,6 +211,9 @@ public class InterfazJuego extends JFrame implements Observer{
 		}
 		return botonVertical;
 	}
+	
+
+	
 	
 	
 	
