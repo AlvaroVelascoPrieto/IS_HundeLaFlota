@@ -144,6 +144,26 @@ public class InterfazJuego extends JFrame implements Observer{
 		}
 	}
 	
+	private void actualizarMisBarcos(ArrayList<ArrayList<Boolean>> pMiTablero){
+		panelTableroCont.removeAll();
+		for(int i = 0; i<10; i++) {
+			for(int j = 0; j<10;j++) {
+				if (pMiTablero.get(i).get(j)){
+					JTextPane barco = new JTextPane();
+					barco.setBackground(Color.BLACK);
+					barco.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+					panelMiTablero.add(barco);
+				}
+				else{
+					JTextPane agua = new JTextPane();
+					agua.setBackground(Color.BLUE);
+					agua.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+					panelMiTablero.add(agua);
+				}
+			}
+		}	
+	}
+	
 	private JButton cbt() { //par�metros de entrada
 		JButton btnNewButton = new JButton(); //texto del bot�n
 		return btnNewButton;
@@ -165,6 +185,16 @@ public class InterfazJuego extends JFrame implements Observer{
 					}else {
 						//Pintar bomba al agua
 					}
+				}
+			}
+		}
+		
+		//Actualizacion colocacion
+		ArrayList<ArrayList<Boolean>> barcosJugador = GestorJuego.getGestorJuego().getBarcosJugador();
+		for (int i = 0; i<10; i++) {
+			for (int j = 0; j<10; j++) {
+				if (barcosJugador.get(i).get(j)){
+					//Pintar barco
 				}
 			}
 		}

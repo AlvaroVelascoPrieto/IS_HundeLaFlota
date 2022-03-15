@@ -45,7 +45,13 @@ public class GestorJuego extends Observable {
 	public void gestionarColocacionBarcosJugador(int pX, int pY, int pTamano, boolean pDireccion){ //direccion: true=horizontal, false =vertical
 		//poner a true las casillas de barcoJugador 
 		if (puedeColocar(pX,pY,pTamano,pDireccion)){
-			
+			for (int i=0;i<pTamano-1;i++){
+				if (pDireccion){
+					this.barcosJugador.get(pY).set(pX+i, true);
+				}else{
+					this.barcosJugador.get(pY+i).set(pX, true);
+				}
+			}
 		}
 		setChanged();
 		notifyObservers();
@@ -277,5 +283,9 @@ public class GestorJuego extends Observable {
 	
 	public ArrayList<ArrayList<Boolean>> getBarcosIA() {
 		return this.barcosIA;
+	}
+	
+	public ArrayList<ArrayList<Boolean>> getBarcosJugador(){
+		return this.barcosJugador;
 	}
 }
