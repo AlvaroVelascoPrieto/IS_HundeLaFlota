@@ -17,7 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
-import packModelo.GestorJuego;
+import packModelo.Jugador;
 
 public class InterfazJuego extends JFrame implements Observer{
 
@@ -48,7 +48,7 @@ public class InterfazJuego extends JFrame implements Observer{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		inicializar();
 		setVisible(true);
-		GestorJuego.getGestorJuego().addObserver(this);
+		Jugador.getMiJugador().addObserver(this);
 	}
 
 	
@@ -169,35 +169,9 @@ public class InterfazJuego extends JFrame implements Observer{
 		return btnNewButton;
 	}
 	
-	
-
-	
-	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		ArrayList<ArrayList<Boolean>> cTocadasIA = GestorJuego.getGestorJuego().getCasillasTocadasIA();
-		ArrayList<ArrayList<Boolean>> barcosIA = GestorJuego.getGestorJuego().getBarcosIA();
-		for (int i = 0; i<10; i++) {
-			for (int j = 0; j<10; j++) {
-				if(cTocadasIA.get(i).get(j)) {
-					if (barcosIA.get(i).get(j)) {
-						//Pintar barco tocado
-					}else {
-						//Pintar bomba al agua
-					}
-				}
-			}
-		}
 		
-		//Actualizacion colocacion
-		ArrayList<ArrayList<Boolean>> barcosJugador = GestorJuego.getGestorJuego().getBarcosJugador();
-		for (int i = 0; i<10; i++) {
-			for (int j = 0; j<10; j++) {
-				if (barcosJugador.get(i).get(j)){
-					//Pintar barco
-				}
-			}
-		}
 	}
 	
 	private JRadioButton getbotonTamano1() {

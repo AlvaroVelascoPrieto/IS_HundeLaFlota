@@ -1,10 +1,9 @@
-import packModelo.GestorJuego;
+import packModelo.Jugador;
 import packVista.InterfazJuego;
 
 public class ProgramaPrincipal {
 	public static void main(String[] args) {
-		GestorJuego.getGestorJuego();
-		InterfazJuego iJ = new InterfazJuego();
-		//Unai
+		Jugador.getMiJugador();
+		new InterfazJuego();
 	}
 }
