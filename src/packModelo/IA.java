@@ -1,5 +1,6 @@
 package packModelo;
 
+
 public class IA {
 
 	private static IA miIA;
@@ -14,7 +15,11 @@ public class IA {
 		return miIA;
 	}
 
-	public void disparar() {
+	/**
+	 * 
+	 * @param pArma
+	 */
+	public void accionarArmamento(Arma pArma) {
 		// TODO - implement IA.disparar
 		throw new UnsupportedOperationException();
 	}
@@ -26,6 +31,16 @@ public class IA {
 
 	private Boolean generarRandomBoolean() {
 		// TODO - implement IA.generarRandomBoolean
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param pCoord
+	 * @param pArma
+	 */
+	public void gestionarAtaque(Coordenada pCoord, String pArma) {
+		// TODO - implement IA.gestionarAtaque
 		throw new UnsupportedOperationException();
 	}
 
