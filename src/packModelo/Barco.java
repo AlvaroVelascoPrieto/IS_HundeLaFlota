@@ -37,5 +37,9 @@ public class Barco {
 		// TODO - implement Barco.getIterador
 		throw new UnsupportedOperationException();
 	}
+	
+	public ArrayList<Coordenada> getCoordenadas() {
+		return this.listaC;
+	}
 
 }

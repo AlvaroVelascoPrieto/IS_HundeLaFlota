@@ -38,5 +38,9 @@ public class Flota {
 		// TODO - implement Flota.getIterador
 		throw new UnsupportedOperationException();
 	}
+	
+	public ArrayList<Barco> getListaBarcos(){
+		return this.listaB;
+	}
 
 }

@@ -13,8 +13,9 @@ public class Coordenada {
 	 * @param pY
 	 */
 	public Coordenada(Boolean pTocado, int pX, int pY) {
-		// TODO - implement Coordenada.Coordenada
-		throw new UnsupportedOperationException();
+		this.tocado = pTocado;
+		this.x = pX;
+		this.y = pY;
 	}
 
 	/**
@@ -29,6 +30,18 @@ public class Coordenada {
 	public void setTocado() {
 		// TODO - implement Coordenada.setTocado
 		throw new UnsupportedOperationException();
+	}
+	
+	public int getX() {
+		return this.x;
+	}
+	
+	public int getY() {
+		return this.y;
+	}
+	
+	public boolean getTocado() {
+		return this.tocado;
 	}
 
 }

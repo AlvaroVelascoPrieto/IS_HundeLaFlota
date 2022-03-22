@@ -1,7 +1,8 @@
 package packModelo;
 
+import java.util.Observable;
 
-public class Jugador {
+public class Jugador extends Observable {
 
 	private static Jugador miJugador;
 	private Flota miFlota;
@@ -9,10 +10,13 @@ public class Jugador {
 
 	private Jugador() {
 		// TODO - implement Jugador.Jugador
-		throw new UnsupportedOperationException();
+		
 	}
 
 	public static Jugador getMiJugador() {
+		if(miJugador==null) {
+			miJugador = new Jugador();
+		}
 		return miJugador;
 	}
 
@@ -45,6 +49,10 @@ public class Jugador {
 	public void gestionarAtaque(Coordenada pCoord, String pArma) {
 		// TODO - implement Jugador.gestionarAtaque
 		throw new UnsupportedOperationException();
+	}
+	
+	public Flota getMiFLota() {
+		return this.miFlota;
 	}
 
 }
