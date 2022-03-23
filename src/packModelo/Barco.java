@@ -42,4 +42,26 @@ public class Barco {
 		return this.listaC;
 	}
 
+	public void hundir() {
+		for (Coordenada coordAct : listaC) {
+			coordAct.setTocado();
+		}
+		this.hundido = true;
+	}
+
+	public void tocar(Coordenada pCoord) {
+		boolean hundidoPosible = true;
+		for (Coordenada coordAct : listaC) {
+			if (coordAct.esCoordenada(pCoord)) {
+				coordAct.setTocado();
+			}
+			if (!coordAct.getTocado()){
+				hundidoPosible = false;
+			}
+		}
+		if (hundido) {
+			this.hundido = true;
+		}
+	}
+
 }

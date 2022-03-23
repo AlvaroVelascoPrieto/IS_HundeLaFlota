@@ -1,5 +1,6 @@
 package packModelo;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 public class Jugador extends Observable {
@@ -20,35 +21,50 @@ public class Jugador extends Observable {
 		return miJugador;
 	}
 
-	/**
-	 * 
-	 * @param pCoord
-	 * @param pTamaño
-	 * @param pHorizontal
-	 */
 	public void añadirBarco(Coordenada pCoord, int pTamaño, Boolean pHorizontal) {
 		// TODO - implement Jugador.añadirBarco
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param pCoord
-	 * @param pArma
-	 */
 	public void accionarArmamento(Coordenada pCoord, String pArma) {
-		// TODO - implement Jugador.disparar
-		throw new UnsupportedOperationException();
+		ArrayList<Arma> misArmas = this.armamento.getLArmas();
+		if (pArma.equals("Bomba")) {
+			for (Arma arma : misArmas) {
+				if (arma instanceof Bomba) {
+					this.armamento.borrar(arma);
+					IA.getMiIA().gestionarAtaque(pCoord, arma);
+					break;
+				}
+			}
+		}
+		else if (pArma.equals("Misil")) {
+			for (Arma arma : misArmas) {
+				if (arma instanceof Misil) {
+					this.armamento.borrar(arma);
+					IA.getMiIA().gestionarAtaque(pCoord, arma);
+					break;
+				}
+			}
+		}
+		else if (pArma.equals("Escudo")) {
+			//Gestionar escudo
+		}
+		else {
+			//Gestionar radar
+		}
+		IA.getMiIA().accionarArmamento();
 	}
 
-	/**
-	 * 
-	 * @param pCoord
-	 * @param pArma
-	 */
-	public void gestionarAtaque(Coordenada pCoord, String pArma) {
-		// TODO - implement Jugador.gestionarAtaque
-		throw new UnsupportedOperationException();
+	public void gestionarAtaque(Coordenada pCoord, Arma pArma) {
+		ArrayList<Barco> misBarcos = this.miFlota.getListaBarcos();
+		if (this.miFlota.contieneBarcoEnPos(pCoord)) {
+			if(pArma instanceof Bomba) {
+				this.miFlota.getBarcoEnPos(pCoord).tocar(pCoord);
+			}
+			else if (pArma instanceof Misil) {
+				this.miFlota.getBarcoEnPos(pCoord).hundir();	
+			}
+		}
 	}
 	
 	public Flota getMiFLota() {

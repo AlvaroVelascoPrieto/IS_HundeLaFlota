@@ -198,8 +198,7 @@ public class InterfazJuego extends JFrame implements Observer{
 					labelsJugador.get(index).setBackground(Color.getHSBColor(28, 100, 61)); //Marron
 				}
 			}
-		}
-		
+		}	
 	}
 	
 	public JRadioButton getbotonTamano1() {

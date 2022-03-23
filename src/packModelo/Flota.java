@@ -43,4 +43,22 @@ public class Flota {
 		return this.listaB;
 	}
 
+	public boolean contieneBarcoEnPos(Coordenada pCoord) {
+		for(Barco barcoAct : listaB) {
+			if (barcoAct.estaEn(pCoord)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Barco getBarcoEnPos(Coordenada pCoord) {
+		for(Barco barcoAct : listaB) {
+			if (barcoAct.estaEn(pCoord)) {
+				return barcoAct;
+			}
+		}
+		return null;
+	}
+
 }

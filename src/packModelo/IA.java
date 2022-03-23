@@ -1,5 +1,6 @@
 package packModelo;
 
+import java.util.ArrayList;
 
 public class IA {
 
@@ -19,7 +20,7 @@ public class IA {
 	 * 
 	 * @param pArma
 	 */
-	public void accionarArmamento(Arma pArma) {
+	public void accionarArmamento() {
 		// TODO - implement IA.disparar
 		throw new UnsupportedOperationException();
 	}
@@ -39,9 +40,16 @@ public class IA {
 	 * @param pCoord
 	 * @param pArma
 	 */
-	public void gestionarAtaque(Coordenada pCoord, String pArma) {
-		// TODO - implement IA.gestionarAtaque
-		throw new UnsupportedOperationException();
+	public void gestionarAtaque(Coordenada pCoord, Arma pArma) {
+		ArrayList<Barco> misBarcos = this.miFlota.getListaBarcos();
+		if (this.miFlota.contieneBarcoEnPos(pCoord)) {
+			if(pArma instanceof Bomba) {
+				this.miFlota.getBarcoEnPos(pCoord).tocar(pCoord);
+			}
+			else if (pArma instanceof Misil) {
+				this.miFlota.getBarcoEnPos(pCoord).hundir();	
+			}
+		}
 	}
 
 }
