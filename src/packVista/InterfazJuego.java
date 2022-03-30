@@ -19,6 +19,7 @@ import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 import packControlador.Controler;
+import packControlador.infoControler;
 import packModelo.Barco;
 import packModelo.Coordenada;
 import packModelo.Flota;
@@ -27,7 +28,6 @@ import packModelo.Jugador;
 public class InterfazJuego extends JFrame implements Observer{
 	private ArrayList<JButton> labelsJugador = new ArrayList<JButton>();
 	private ArrayList<JButton> labelsIA = new ArrayList<JButton>();
-	private static InterfazJuego miInterfazJuego;
 	private JPanel contentPanel;
 	private JPanel panelTableros;
 	private JPanel panelMiTableroTit;
@@ -42,7 +42,7 @@ public class InterfazJuego extends JFrame implements Observer{
 	private JRadioButton botonTamano2;
 	private JRadioButton botonTamano3;
 	private JRadioButton botonTamano4;
-	private JRadioButton botonHorizantal;
+	private JRadioButton botonHorizontal;
 	private JRadioButton botonVertical;
 	private ButtonGroup grupoTamano = new ButtonGroup();
 	private ButtonGroup grupoDireccion = new ButtonGroup();
@@ -60,18 +60,11 @@ public class InterfazJuego extends JFrame implements Observer{
 
 	
 	
-	private InterfazJuego() {
+	public InterfazJuego() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		inicializar();
 		setVisible(true);
 		Jugador.getMiJugador().addObserver(this);
-	}
-
-	public static InterfazJuego getMiInferfaz() {
-		if(miInterfazJuego==null) {
-			miInterfazJuego = new InterfazJuego();
-		}
-		return miInterfazJuego;
 	}
 	
 	//Inicializa los componentes de la ventana
@@ -133,9 +126,9 @@ public class InterfazJuego extends JFrame implements Observer{
 		panelColocacionBarco.add(panelDireccionBarco);
 		panelDireccionBarco.setLayout(new GridLayout(3,1,0,0));
 		panelDireccionBarco.add(new JLabel("DIRECCION"));
-		panelDireccionBarco.add(getbotonHorizantal());
+		panelDireccionBarco.add(getbotonHorizontal());
 		panelDireccionBarco.add(getbotonVertical());
-		grupoDireccion.add(botonHorizantal);
+		grupoDireccion.add(botonHorizontal);
 		grupoDireccion.add(botonVertical);
 		
 		this.panelArmas = new JPanel();
@@ -169,6 +162,7 @@ public class InterfazJuego extends JFrame implements Observer{
 			agua.addActionListener(Controler.getMiControlador());
 			panelMiTablero.add(agua);
 			labelsJugador.add(agua);
+			Controler.getMiControlador().anadirBotonJugador(agua);
 			JButton agua2 = new JButton();
 			agua2.setOpaque(true);
 			agua2.setBackground(Color.BLUE);
@@ -176,6 +170,7 @@ public class InterfazJuego extends JFrame implements Observer{
 			agua2.addActionListener(Controler.getMiControlador());
 			panelTableroCont.add(agua2);
 			labelsIA.add(agua2);
+			Controler.getMiControlador().anadirBotonIA(agua2);
 			}
 		}
 	}
@@ -204,6 +199,9 @@ public class InterfazJuego extends JFrame implements Observer{
 	public JRadioButton getbotonTamano1() {
 		if (botonTamano1 == null) {
 			botonTamano1 = new JRadioButton("1");
+			botonTamano1.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonTamano1);
+			botonTamano1.setSelected(true);
 		}
 		return botonTamano1;
 	}
@@ -211,6 +209,8 @@ public class InterfazJuego extends JFrame implements Observer{
 	public JRadioButton getbotonTamano2() {
 		if (botonTamano2 == null) {
 			botonTamano2 = new JRadioButton("2");
+			botonTamano2.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonTamano2);
 		}
 		return botonTamano2;
 	}
@@ -218,6 +218,8 @@ public class InterfazJuego extends JFrame implements Observer{
 	public JRadioButton getbotonTamano3() {
 		if (botonTamano3 == null) {
 			botonTamano3 = new JRadioButton("3");
+			botonTamano3.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonTamano3);
 		}
 		return botonTamano3;
 	}
@@ -225,20 +227,27 @@ public class InterfazJuego extends JFrame implements Observer{
 	public JRadioButton getbotonTamano4() {
 		if (botonTamano4 == null) {
 			botonTamano4 = new JRadioButton("4");
+			botonTamano4.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonTamano4);
 		}
 		return botonTamano4;
 	}
 	
-	public JRadioButton getbotonHorizantal() {
-		if (botonHorizantal == null) {
-			botonHorizantal = new JRadioButton("HORIZONTAL");
+	public JRadioButton getbotonHorizontal() {
+		if (botonHorizontal == null) {
+			botonHorizontal = new JRadioButton("HORIZONTAL");
+			botonHorizontal.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonHorizontal);
+			botonHorizontal.setSelected(true);
 		}
-		return botonHorizantal;
+		return botonHorizontal;
 	}
 	
 	public JRadioButton getbotonVertical() {
 		if (botonVertical == null) {
 			botonVertical = new JRadioButton("VERTICAL");
+			botonVertical.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonVertical);
 		}
 		return botonVertical;
 	}
@@ -246,6 +255,9 @@ public class InterfazJuego extends JFrame implements Observer{
 	public JRadioButton getbotonBomba() {
 		if (botonBomba == null) {
 			botonBomba = new JRadioButton("Bomba");
+			botonBomba.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonBomba);
+			botonBomba.setSelected(true);
 		}
 		return botonBomba;
 	}
@@ -253,6 +265,8 @@ public class InterfazJuego extends JFrame implements Observer{
 	public JRadioButton getbotonMisil() {
 		if (botonMisil == null) {
 			botonMisil = new JRadioButton("Misil");
+			botonMisil.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonMisil);
 		}
 		return botonMisil;
 	}
@@ -260,6 +274,8 @@ public class InterfazJuego extends JFrame implements Observer{
 	public JRadioButton getbotonEscudo() {
 		if (botonEscudo == null) {
 			botonEscudo = new JRadioButton("Escudo");
+			botonEscudo.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonEscudo);
 		}
 		return botonEscudo;
 	}
@@ -267,16 +283,10 @@ public class InterfazJuego extends JFrame implements Observer{
 	public JRadioButton getbotonRadar() {
 		if (botonRadar == null) {
 			botonRadar = new JRadioButton("Radar");
+			botonRadar.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonRadar);
 		}
 		return botonRadar;
 	}
-	
-	public ArrayList<JButton> getLabelsJugador(){
-		return this.labelsJugador;
-	}
-	
-	public ArrayList<JButton> getLabelsIA(){
-		return this.labelsIA;
-	}
-	
+		
 }

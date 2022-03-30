@@ -41,7 +41,6 @@ public class IA {
 	 * @param pArma
 	 */
 	public void gestionarAtaque(Coordenada pCoord, Arma pArma) {
-		ArrayList<Barco> misBarcos = this.miFlota.getListaBarcos();
 		if (this.miFlota.contieneBarcoEnPos(pCoord)) {
 			if(pArma instanceof Bomba) {
 				this.miFlota.getBarcoEnPos(pCoord).tocar(pCoord);

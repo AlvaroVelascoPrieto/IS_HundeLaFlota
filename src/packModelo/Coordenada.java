@@ -3,33 +3,26 @@ package packModelo;
 public class Coordenada {
 
 	private Boolean tocado;
-	private int x;
-	private int y;
+	private Integer x;
+	private Integer y;
 
-	/**
-	 * 
-	 * @param pTocado
-	 * @param pX
-	 * @param pY
-	 */
 	public Coordenada(Boolean pTocado, int pX, int pY) {
 		this.tocado = pTocado;
 		this.x = pX;
 		this.y = pY;
 	}
 
-	/**
-	 * 
-	 * @param pCoord
-	 */
 	public Boolean esCoordenada(Coordenada pCoord) {
-		// TODO - implement Coordenada.esCoordenada
-		throw new UnsupportedOperationException();
+		if (this.x.equals(pCoord.getX())) {
+			if(this.y.equals(pCoord.getY())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void setTocado() {
-		// TODO - implement Coordenada.setTocado
-		throw new UnsupportedOperationException();
+		this.tocado = true;
 	}
 	
 	public int getX() {

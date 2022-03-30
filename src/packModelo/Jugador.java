@@ -10,8 +10,8 @@ public class Jugador extends Observable {
 	private Armamento armamento;
 
 	private Jugador() {
-		// TODO - implement Jugador.Jugador
-		
+		this.miFlota = new Flota();
+		//this.armamento = new Armamento();
 	}
 
 	public static Jugador getMiJugador() {
@@ -21,9 +21,10 @@ public class Jugador extends Observable {
 		return miJugador;
 	}
 
-	public void añadirBarco(Coordenada pCoord, int pTamaño, Boolean pHorizontal) {
-		// TODO - implement Jugador.añadirBarco
-		throw new UnsupportedOperationException();
+	public void añadirBarco(Coordenada pCoord, int pTamano, Boolean pHorizontal) {
+		this.miFlota.añadirBarco(pCoord, pTamano, pHorizontal);
+		setChanged();
+		notifyObservers();
 	}
 
 	public void accionarArmamento(Coordenada pCoord, String pArma) {

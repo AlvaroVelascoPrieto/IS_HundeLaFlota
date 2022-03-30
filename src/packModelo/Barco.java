@@ -9,8 +9,8 @@ public class Barco {
 	private Boolean hundido;
 
 	public Barco() {
-		// TODO - implement Barco.Barco
-		throw new UnsupportedOperationException();
+		this.listaC = new ArrayList<Coordenada>();
+		this.hundido = false;
 	}
 
 	/**
@@ -19,9 +19,17 @@ public class Barco {
 	 * @param pTamaño
 	 * @param pHorizontal
 	 */
-	public void añadirCoordenada(Coordenada pCoord, int pTamaño, Boolean pHorizontal) {
-		// TODO - implement Barco.añadirCoordenada
-		throw new UnsupportedOperationException();
+	public void anadirCoordenadas(Coordenada pCoord, int pTamano, Boolean pHorizontal) {
+		for (int i=0; i<pTamano; i++) {
+			if(pHorizontal) {
+				Coordenada nuevaCoordenada = new Coordenada(false, pCoord.getX()+i, pCoord.getY());
+				this.listaC.add(nuevaCoordenada);
+			}
+			else {
+				Coordenada nuevaCoordenada = new Coordenada(false, pCoord.getX(), pCoord.getY()+i);
+				this.listaC.add(nuevaCoordenada);
+			}
+		}
 	}
 
 	/**
@@ -30,12 +38,20 @@ public class Barco {
 	 */
 	public Boolean estaEn(Coordenada pCoord) {
 		// TODO - implement Barco.estaEn
-		throw new UnsupportedOperationException();
+		boolean enc=false;
+		Coordenada auxCoord;
+		Iterator<Coordenada> itr=this.getIterador();
+		while (itr.hasNext()) {
+			auxCoord = itr.next();
+			if(auxCoord.esCoordenada(pCoord)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private Iterator<Coordenada> getIterador() {
-		// TODO - implement Barco.getIterador
-		throw new UnsupportedOperationException();
+		return this.listaC.iterator();
 	}
 	
 	public ArrayList<Coordenada> getCoordenadas() {
@@ -43,7 +59,9 @@ public class Barco {
 	}
 
 	public void hundir() {
-		for (Coordenada coordAct : listaC) {
+		Iterator<Coordenada> itr = this.getIterador();
+		while (itr.hasNext()) {
+			Coordenada coordAct = itr.next();
 			coordAct.setTocado();
 		}
 		this.hundido = true;
@@ -51,7 +69,9 @@ public class Barco {
 
 	public void tocar(Coordenada pCoord) {
 		boolean hundidoPosible = true;
-		for (Coordenada coordAct : listaC) {
+		Iterator<Coordenada> itr = this.getIterador();
+		while (itr.hasNext()) {
+			Coordenada coordAct = itr.next();
 			if (coordAct.esCoordenada(pCoord)) {
 				coordAct.setTocado();
 			}
@@ -59,7 +79,7 @@ public class Barco {
 				hundidoPosible = false;
 			}
 		}
-		if (hundido) {
+		if (hundidoPosible) {
 			this.hundido = true;
 		}
 	}

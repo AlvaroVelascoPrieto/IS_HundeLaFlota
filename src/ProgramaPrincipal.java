@@ -4,6 +4,6 @@ import packVista.InterfazJuego;
 public class ProgramaPrincipal {
 	public static void main(String[] args) {
 		Jugador.getMiJugador();
-		InterfazJuego.getMiInferfaz();
+		InterfazJuego interfaz = new InterfazJuego();
 	}
 }

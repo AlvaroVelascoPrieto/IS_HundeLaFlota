@@ -14,10 +14,14 @@ import packVista.InterfazJuego;
 
 public class Controler implements ActionListener {
 	private static Controler miControlador;
+	private ArrayList<JButton> tableroJugador;
+	private ArrayList<JButton> tableroIA;
 	private boolean jugando;
 
 	private Controler() {
 		jugando = false;
+		tableroJugador = new ArrayList<JButton>();
+		tableroIA = new ArrayList<JButton>();
 	}
 
 	public static Controler getMiControlador() {
@@ -29,65 +33,63 @@ public class Controler implements ActionListener {
 
 
 	public void actionPerformed(ActionEvent e) {
-		if (InterfazJuego.getMiInferfaz().getLabelsJugador().contains(e.getSource())){
-			
+		if (tableroJugador.contains(e.getSource())){
 			System.out.print("pX: ");
-			System.out.println(InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())%10);
+			System.out.println(tableroJugador.indexOf(e.getSource())%10);
 			System.out.print("pY: ");
-			System.out.println(InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())/10);
-			/*
+			System.out.println(tableroJugador.indexOf(e.getSource())/10);
+			
 			if (jugando) { //En juego
-				InterfazJuego.getMiInferfaz().getLabelsJugador().get(InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())).setBackground(Color.BLACK);
+				//InterfazJuego.getMiInferfaz().getLabelsJugador().get(InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())).setBackground(Color.BLACK);
 			}
 			else { //En proceso de colocacion
-				if (InterfazJuego.getMiInferfaz().getbotonHorizantal().isSelected()) { //Horizontal
-					if (InterfazJuego.getMiInferfaz().getbotonTamano1().isSelected()) { //Tamaño 1
-						Coordenada origenBarco = new Coordenada(false,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())%10,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())/10);
+				Coordenada origenBarco = new Coordenada(false,tableroJugador.indexOf(e.getSource())%10,tableroJugador.indexOf(e.getSource())/10);
+				int tamano = infoControler.getMiInfoControler().getTamanoSeleccionado();
+				boolean horizontal = infoControler.getMiInfoControler().getHorizontalSeleccionado();
+				if (horizontal) { //Horizontal
+					if (tamano==1) { //Tamaño 1
 						Jugador.getMiJugador().añadirBarco(origenBarco, 1, true);
 					}
-					else if (InterfazJuego.getMiInferfaz().getbotonTamano2().isSelected()) { //Tamaño 2
-						Coordenada origenBarco = new Coordenada(false,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())%10,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())/10);
+					else if (tamano==2) { //Tamaño 2
 						Jugador.getMiJugador().añadirBarco(origenBarco, 2, true);
 					}
-					else if (InterfazJuego.getMiInferfaz().getbotonTamano3().isSelected()) { //Tamaño 3
-						Coordenada origenBarco = new Coordenada(false,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())%10,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())/10);
+					else if (tamano==3) { //Tamaño 3
 						Jugador.getMiJugador().añadirBarco(origenBarco, 3, true);
 					}
-					else if (InterfazJuego.getMiInferfaz().getbotonTamano4().isSelected()) { //Tamaño 4
-						Coordenada origenBarco = new Coordenada(false,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())%10,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())/10);
+					else if (tamano==4) { //Tamaño 4
 						Jugador.getMiJugador().añadirBarco(origenBarco, 4, true);
 					}
 					else {
 						//Imprimir error
 					}
 				}
-				else if(InterfazJuego.getMiInferfaz().getbotonVertical().isSelected()) { //Vertical
-					if (InterfazJuego.getMiInferfaz().getbotonTamano1().isSelected()) { //Tamaño 1
-						Coordenada origenBarco = new Coordenada(false,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())%10,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())/10);
+				else { //Vertical
+					if (tamano==1) { //Tamaño 1
 						Jugador.getMiJugador().añadirBarco(origenBarco, 1, false);
 					}
-					else if (InterfazJuego.getMiInferfaz().getbotonTamano2().isSelected()) { //Tamaño 2
-						Coordenada origenBarco = new Coordenada(false,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())%10,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())/10);
+					else if (tamano==2) { //Tamaño 2
 						Jugador.getMiJugador().añadirBarco(origenBarco, 2, false);
 					}
-					else if (InterfazJuego.getMiInferfaz().getbotonTamano3().isSelected()) { //Tamaño 3
-						Coordenada origenBarco = new Coordenada(false,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())%10,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())/10);
+					else if (tamano==3) { //Tamaño 3
 						Jugador.getMiJugador().añadirBarco(origenBarco, 3, false);
 					}
-					else if (InterfazJuego.getMiInferfaz().getbotonTamano4().isSelected()) { //Tamaño 4
-						Coordenada origenBarco = new Coordenada(false,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())%10,InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())/10);
+					else if (tamano==4) { //Tamaño 4
 						Jugador.getMiJugador().añadirBarco(origenBarco, 4, false);
 					}
 					else {
 						//Imprimir error
 					}
 				}
-				else { //Ni horizontal ni vertical
-					//Imprimir error
-				}
 			}
-			*/
 		}
+	}
+	
+	public void anadirBotonJugador(JButton pBoton) {
+		this.tableroJugador.add(pBoton);
+	}
+	
+	public void anadirBotonIA(JButton pBoton) {
+		this.tableroIA.add(pBoton);
 	}
 
 }
