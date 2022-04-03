@@ -84,4 +84,12 @@ public class Barco {
 		}
 	}
 
+	public int getTamano() {
+		return this.listaC.size();
+	}
+	
+	public boolean getHundido() {
+		return this.hundido;
+	}
+
 }

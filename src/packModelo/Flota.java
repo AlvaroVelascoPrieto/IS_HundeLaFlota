@@ -6,62 +6,73 @@ import java.util.Iterator;
 public class Flota {
 
 	private ArrayList<Barco> listaB;
+	private Armamento misArmas;
+	private int numBar1;
+	private int numBar2;
+	private int numBar3;
+	private int numBar4;
+	private boolean completa;
+	private boolean hundida;
 
 	public Flota() {
 		this.listaB = new ArrayList<Barco>();
+		completa = false;
+		this.misArmas = new Armamento();
+		this.misArmas.generarArmamentoInicial();
 	}
 
-	/**
-	 * 
-	 * @param pCoord
-	 * @param pTamaño
-	 * @param pHorizontal
-	 */
 	public void añadirBarco(Coordenada pCoord, int pTamano, Boolean pHorizontal) {
-		// TODO - implement Flota.añadirBarco
-		if (this.puedeAnadir(pCoord,pTamano,pHorizontal)) {
-			Barco nuevoBarco = new Barco();
-			nuevoBarco.anadirCoordenadas(pCoord, pTamano, pHorizontal);
-			this.listaB.add(nuevoBarco);
+		Barco nuevoBarco = new Barco();
+		nuevoBarco.anadirCoordenadas(pCoord, pTamano, pHorizontal);
+		this.listaB.add(nuevoBarco);
+		if(pTamano==1) {
+			numBar1 += 1;
 		}
+		else if(pTamano==2) {
+			numBar2 += 1;
+		}
+		else if(pTamano==3) {
+			numBar3 += 1;
+		}
+		else {
+			numBar4 += 1;
+		}
+		this.comprobarCompleta();
 	}
 
-	/**
-	 * 
-	 * @param pCoord
-	 * @param pTamaño
-	 * @param pHorizontal
-	 */
-	private Boolean puedeAnadir(Coordenada pCoord, int pTamano, Boolean pHorizontal) {
+	public Boolean puedeAnadir(Coordenada pCoord, int pTamano, Boolean pHorizontal) {
+		if(pTamano==1&&numBar1>=4) {
+			return false;
+		}
+		else if (pTamano==2&&numBar2>=3) {
+			return false;
+		}
+		else if (pTamano==3&&numBar3>=2) {
+			return false;
+		}
+		else if(pTamano==4&&numBar4>=1) {
+			return false;
+		}
 		if (pHorizontal){//horizontal
 			if (pCoord.getX()+pTamano-1<10){
 				if (pCoord.getX()==0){//columna izq
 					if(pCoord.getY()==0){//esquina sup izq
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+pTamano,pCoord.getY()))){
-							return false;
-						}
 						for (int i=0;i<pTamano+1;i++){
-							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()+1))){
+							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()+1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()))){
 								return false;
 							}
 						}
 					}
 					else if(pCoord.getY()==9){//esquina inf izq
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+pTamano,pCoord.getY()))){
-							return false;
-						}
 						for (int i=0;i<pTamano+1;i++){
-							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()-1))){
+							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()))){
 								return false;
 							}
 						}
 					}
 					else{
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+pTamano,pCoord.getY()))){
-							return false;
-						}
 						for (int i=0;i<pTamano+1;i++){
-							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()+1))){
+							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()+1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i,pCoord.getY()))){
 								return false;
 							}
 						}
@@ -70,31 +81,22 @@ public class Flota {
 				}
 				else if(pCoord.getX()+pTamano-1==9){//columna dcha
 					if(pCoord.getY()==0){//esquina sup der
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()))){
-							return false;
-						}
 						for (int i=0;i<pTamano+1;i++){
-							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()+1))){
+							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()+1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()))){
 								return false;
 							}
 						}
 					}
 					else if(pCoord.getY()==9){//esquina inf der
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()))){
-							return false;
-						}
 						for (int i=0;i<pTamano+1;i++){
-							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()-1))){
+							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()))){
 								return false;
 							}
 						}
 					}
 					else{
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()))){
-							return false;
-						}
 						for (int i=0;i<pTamano+1;i++){
-							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()+1))){
+							if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()+1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()))){
 								return false;
 							}
 						}
@@ -102,32 +104,23 @@ public class Flota {
 					}
 				}
 				else if(pCoord.getY()==0){//fila arriba sin esquinas
-					if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+pTamano,pCoord.getY()))){
-						return false;
-					}
 					for (int i=0;i<pTamano+2;i++){
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()+1))){
+						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()+1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()))){
 							return false;
 						}
 					}
 					
 				}
 				else if(pCoord.getY()==9){//fila abajo sin esquinas
-					if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+pTamano,pCoord.getY()))){
-						return false;
-					}
 					for (int i=0;i<pTamano+2;i++){
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()-1))){
+						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()))){
 							return false;
 						}
 					}
 				}
 				else{
-					if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+pTamano,pCoord.getY()))){
-						return false;
-					}
 					for (int i=0;i<pTamano+2;i++){
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()+1))){
+						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()+1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+i-1,pCoord.getY()))){
 							return false;
 						}
 					}
@@ -143,31 +136,22 @@ public class Flota {
 			if (pCoord.getY()+pTamano-1<10){
 				if(pCoord.getY()==0){//Fila superior
 					if (pCoord.getX()==0){//Esquina superior izq
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+pTamano))){
-							return false;
-						}
 						for (int i=0; i<pTamano+1; i++){
-							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i))){
+							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+i))){
 								return false;
 							}
 						}
 					}
 					else if(pCoord.getX()==9){//Esquina superior der
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+pTamano))){
-							return false;
-						}
 						for (int i=0; i<pTamano+1; i++){
-							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i))){
+							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+i))){
 								return false;
 							}
 						}
 					}
 					else{//Fila superior menos esquinas
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+pTamano))){
-							return false;
-						}
 						for (int i=0; i<pTamano+1; i++){
-							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i))){
+							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+i))){
 								return false;
 							}
 						}
@@ -175,62 +159,44 @@ public class Flota {
 				}
 				else if(pCoord.getY()+pTamano-1==9){//Fila inferior
 					if(pCoord.getX()==0){//Esquina inferior izq
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()-1))){
-							return false;
-						}
 						for (int i=0; i<pTamano+1; i++){
-							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i-1))){
+							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+i-1))){
 								return false;
 							}
 						}
 					}
 					else if (pCoord.getX()==9){//Esquina inferior derecha
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()-1))){
-							return false;
-						}
 						for (int i=0; i<pTamano+1; i++){
-							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i-1))){
+							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+i-1))){
 								return false;
 							}
 						}
 					}
 					else{//Fila inferior sin esquinas
-						if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()-1))){
-							return false;
-						}
 						for (int i=0; i<pTamano+1; i++){
-							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i-1))){
+							if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+i-1))){
 								return false;
 							}
 						}
 					}
 				}
 				else if(pCoord.getX()==0){//Columna izq sin esquinas
-					if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+pTamano))){
-						return false;
-					}
 					for (int i=0; i<pTamano+2; i++){
-						if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i-1))){
+						if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+i-1))){
 							return false;
 						}
 					}
 				}
 				else if(pCoord.getX()==9){//Columna derecha sin esquinas
-					if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+pTamano))){
-						return false;
-					}
 					for (int i=0; i<pTamano+2; i++){
-						if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i-1))){
+						if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+i-1))){
 							return false;
 						}
 					}
 				}
 				else{
-					if (this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+pTamano))){
-						return false;
-					}
 					for (int i=0; i<pTamano+2; i++){
-						if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i-1))){
+						if(this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()-1,pCoord.getY()+i-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX()+1,pCoord.getY()+i-1))||this.contieneBarcoEnPos(new Coordenada(false,pCoord.getX(),pCoord.getY()+i-1))){
 							return false;
 						}
 					}
@@ -271,6 +237,33 @@ public class Flota {
 			}
 		}
 		return null;
+	}
+
+	public void comprobarCompleta() {
+		if(numBar1==4 && numBar2==3 && numBar3==2 && numBar4==1) {
+			this.completa = true;
+		}
+	}
+	
+	public void comprobarHundimiento() {
+		Iterator<Barco> itr = this.getIterador();
+		boolean hundido = true;
+		while(itr.hasNext()) {
+			Barco act = itr.next();
+			if (!act.getHundido()) {
+				hundido = false;
+			}
+		}
+		this.hundida = hundido;
+		System.out.println(hundido);
+	}
+
+	public boolean getCompleta() {
+		return completa;
+	}
+	
+	public boolean getHundida() {
+		return this.hundida;
 	}
 
 }

@@ -11,7 +11,7 @@ public class Jugador extends Observable {
 
 	private Jugador() {
 		this.miFlota = new Flota();
-		//this.armamento = new Armamento();
+		this.armamento = new Armamento();
 	}
 
 	public static Jugador getMiJugador() {
@@ -21,30 +21,27 @@ public class Jugador extends Observable {
 		return miJugador;
 	}
 
-	public void añadirBarco(Coordenada pCoord, int pTamano, Boolean pHorizontal) {
-		this.miFlota.añadirBarco(pCoord, pTamano, pHorizontal);
-		setChanged();
-		notifyObservers();
+	public void anadirBarco(Coordenada pCoord, int pTamano, Boolean pHorizontal) {
+		if (this.miFlota.puedeAnadir(pCoord, pTamano, pHorizontal)) {
+			this.miFlota.añadirBarco(pCoord, pTamano, pHorizontal);
+			IA.getMiIA().anadirBarco(pTamano);
+			this.miFlota.comprobarCompleta();
+			setChanged();
+			notifyObservers();
+		}
 	}
 
 	public void accionarArmamento(Coordenada pCoord, String pArma) {
-		ArrayList<Arma> misArmas = this.armamento.getLArmas();
 		if (pArma.equals("Bomba")) {
-			for (Arma arma : misArmas) {
-				if (arma instanceof Bomba) {
-					this.armamento.borrar(arma);
-					IA.getMiIA().gestionarAtaque(pCoord, arma);
-					break;
-				}
+			if(this.armamento.armaDisponible(pArma)) {
+				this.armamento.borrar(pArma);
+				IA.getMiIA().gestionarAtaque(pCoord, pArma);	
 			}
 		}
 		else if (pArma.equals("Misil")) {
-			for (Arma arma : misArmas) {
-				if (arma instanceof Misil) {
-					this.armamento.borrar(arma);
-					IA.getMiIA().gestionarAtaque(pCoord, arma);
-					break;
-				}
+			if(this.armamento.armaDisponible(pArma)) {
+				this.armamento.borrar(pArma);
+				IA.getMiIA().gestionarAtaque(pCoord, pArma);
 			}
 		}
 		else if (pArma.equals("Escudo")) {
@@ -54,10 +51,11 @@ public class Jugador extends Observable {
 			//Gestionar radar
 		}
 		IA.getMiIA().accionarArmamento();
+		setChanged();
+		notifyObservers();
 	}
 
 	public void gestionarAtaque(Coordenada pCoord, Arma pArma) {
-		ArrayList<Barco> misBarcos = this.miFlota.getListaBarcos();
 		if (this.miFlota.contieneBarcoEnPos(pCoord)) {
 			if(pArma instanceof Bomba) {
 				this.miFlota.getBarcoEnPos(pCoord).tocar(pCoord);
@@ -65,6 +63,16 @@ public class Jugador extends Observable {
 			else if (pArma instanceof Misil) {
 				this.miFlota.getBarcoEnPos(pCoord).hundir();	
 			}
+			this.miFlota.comprobarHundimiento();
+		}
+	}
+	
+	public void gestorAccion(Coordenada pCoord, int pTamano, Boolean pHorizontal, String pArma) {
+		if (this.miFlota.getCompleta()) {
+			this.accionarArmamento(pCoord, pArma);
+		}
+		else {
+			this.anadirBarco(pCoord, pTamano, pHorizontal);
 		}
 	}
 	

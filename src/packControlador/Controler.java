@@ -16,10 +16,8 @@ public class Controler implements ActionListener {
 	private static Controler miControlador;
 	private ArrayList<JButton> tableroJugador;
 	private ArrayList<JButton> tableroIA;
-	private boolean jugando;
 
 	private Controler() {
-		jugando = false;
 		tableroJugador = new ArrayList<JButton>();
 		tableroIA = new ArrayList<JButton>();
 	}
@@ -38,51 +36,52 @@ public class Controler implements ActionListener {
 			System.out.println(tableroJugador.indexOf(e.getSource())%10);
 			System.out.print("pY: ");
 			System.out.println(tableroJugador.indexOf(e.getSource())/10);
-			
-			if (jugando) { //En juego
-				//InterfazJuego.getMiInferfaz().getLabelsJugador().get(InterfazJuego.getMiInferfaz().getLabelsJugador().indexOf(e.getSource())).setBackground(Color.BLACK);
-			}
-			else { //En proceso de colocacion
-				Coordenada origenBarco = new Coordenada(false,tableroJugador.indexOf(e.getSource())%10,tableroJugador.indexOf(e.getSource())/10);
-				int tamano = infoControler.getMiInfoControler().getTamanoSeleccionado();
-				boolean horizontal = infoControler.getMiInfoControler().getHorizontalSeleccionado();
-				if (horizontal) { //Horizontal
-					if (tamano==1) { //Tamaño 1
-						Jugador.getMiJugador().añadirBarco(origenBarco, 1, true);
-					}
-					else if (tamano==2) { //Tamaño 2
-						Jugador.getMiJugador().añadirBarco(origenBarco, 2, true);
-					}
-					else if (tamano==3) { //Tamaño 3
-						Jugador.getMiJugador().añadirBarco(origenBarco, 3, true);
-					}
-					else if (tamano==4) { //Tamaño 4
-						Jugador.getMiJugador().añadirBarco(origenBarco, 4, true);
-					}
-					else {
-						//Imprimir error
-					}
+			Coordenada origenBarco = new Coordenada(false,tableroJugador.indexOf(e.getSource())%10,tableroJugador.indexOf(e.getSource())/10);
+			int tamano = infoControler.getMiInfoControler().getTamanoSeleccionado();
+			boolean horizontal = infoControler.getMiInfoControler().getHorizontalSeleccionado();
+			if (horizontal) { //Horizontal
+				if (tamano==1) { //Tamaño 1
+					Jugador.getMiJugador().anadirBarco(origenBarco, 1, true);
 				}
-				else { //Vertical
-					if (tamano==1) { //Tamaño 1
-						Jugador.getMiJugador().añadirBarco(origenBarco, 1, false);
-					}
-					else if (tamano==2) { //Tamaño 2
-						Jugador.getMiJugador().añadirBarco(origenBarco, 2, false);
-					}
-					else if (tamano==3) { //Tamaño 3
-						Jugador.getMiJugador().añadirBarco(origenBarco, 3, false);
-					}
-					else if (tamano==4) { //Tamaño 4
-						Jugador.getMiJugador().añadirBarco(origenBarco, 4, false);
-					}
-					else {
-						//Imprimir error
-					}
+				else if (tamano==2) { //Tamaño 2
+					Jugador.getMiJugador().anadirBarco(origenBarco, 2, true);
+				}
+				else if (tamano==3) { //Tamaño 3
+					Jugador.getMiJugador().anadirBarco(origenBarco, 3, true);
+				}
+				else if (tamano==4) { //Tamaño 4
+					Jugador.getMiJugador().anadirBarco(origenBarco, 4, true);
+				}
+				else {
+					//Imprimir error
+				}
+			}
+			else { //Vertical
+				if (tamano==1) { //Tamaño 1
+					Jugador.getMiJugador().anadirBarco(origenBarco, 1, false);
+				}
+				else if (tamano==2) { //Tamaño 2
+					Jugador.getMiJugador().anadirBarco(origenBarco, 2, false);
+				}
+				else if (tamano==3) { //Tamaño 3
+					Jugador.getMiJugador().anadirBarco(origenBarco, 3, false);
+				}
+				else if (tamano==4) { //Tamaño 4
+					Jugador.getMiJugador().anadirBarco(origenBarco, 4, false);
+				}
+				else {
+					//Imprimir error
 				}
 			}
 		}
+		else if (tableroIA.contains(e.getSource())) {
+			tableroIA.get(tableroIA.indexOf(e.getSource())).setBackground(Color.BLACK);
+			Coordenada origenAccion = new Coordenada(false,tableroIA.indexOf(e.getSource())%10,tableroIA.indexOf(e.getSource())/10);
+			String arma = infoControler.getMiInfoControler().getArmaSeleccionada();
+			Jugador.getMiJugador().accionarArmamento(origenAccion, arma);
+		}
 	}
+	
 	
 	public void anadirBotonJugador(JButton pBoton) {
 		this.tableroJugador.add(pBoton);

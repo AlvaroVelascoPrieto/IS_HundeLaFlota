@@ -13,6 +13,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
@@ -23,6 +24,7 @@ import packControlador.infoControler;
 import packModelo.Barco;
 import packModelo.Coordenada;
 import packModelo.Flota;
+import packModelo.IA;
 import packModelo.Jugador;
 
 public class InterfazJuego extends JFrame implements Observer{
@@ -53,8 +55,14 @@ public class InterfazJuego extends JFrame implements Observer{
 	private JRadioButton botonMisil;
 	private JRadioButton botonEscudo;
 	private JRadioButton botonRadar;
+	//private JPanel panelCantidades;
+	//private JLabel cantBombas;
+	//private JLabel cantMisiles;
+	//private JLabel cantEscudos;
+	//private JLabel cantRadares;
 	private ButtonGroup grupoArmas = new ButtonGroup();
-	private JLabel tituloArmas;
+	//private JLabel tituloArmas;
+	private JFrame popUp = new JFrame();
 	
 	
 
@@ -133,18 +141,30 @@ public class InterfazJuego extends JFrame implements Observer{
 		
 		this.panelArmas = new JPanel();
 		panelAcciones.add(panelArmas);
-		panelArmas.setLayout(new BorderLayout(0,0));
-		panelArmas.add(new JLabel("Armas"), BorderLayout.NORTH);
+		panelArmas.setLayout(new GridLayout(2,1));
+		
 		this.panelBotonesArmas = new JPanel();
+		panelBotonesArmas.setLayout(new GridLayout(1,4));
 		panelArmas.add(panelBotonesArmas);
-		panelBotonesArmas.add(getbotonBomba(), BorderLayout.CENTER);
-		panelBotonesArmas.add(getbotonMisil(), BorderLayout.CENTER);
-		panelBotonesArmas.add(getbotonEscudo(), BorderLayout.CENTER);
-		panelBotonesArmas.add(getbotonRadar(), BorderLayout.CENTER);
+		panelBotonesArmas.add(getbotonBomba());
+		panelBotonesArmas.add(getbotonMisil());
+		panelBotonesArmas.add(getbotonEscudo());
+		panelBotonesArmas.add(getbotonRadar());
 		grupoArmas.add(botonBomba);
 		grupoArmas.add(botonMisil);
 		grupoArmas.add(botonEscudo);
 		grupoArmas.add(botonRadar);
+		//this.cantBombas = new JLabel("30");
+		//this.cantMisiles = new JLabel("30");
+		//this.cantEscudos = new JLabel("0");
+		//this.cantRadares = new JLabel("0");
+		//panelCantidades = new JPanel();
+		//panelCantidades.setLayout(new GridLayout(1,4));
+		//panelArmas.add(panelCantidades);
+		//panelCantidades.add(cantBombas);
+		//panelCantidades.add(cantMisiles);
+		//panelCantidades.add(cantEscudos);
+		//panelCantidades.add(cantRadares);
 		
 		this.panelTienda = new JPanel();
 		panelAcciones.add(panelTienda);
@@ -181,7 +201,6 @@ public class InterfazJuego extends JFrame implements Observer{
 	}
 	
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		ArrayList<Barco> flotaJugador = Jugador.getMiJugador().getMiFLota().getListaBarcos();
 		for (Barco barcoAct : flotaJugador) {
 			for (Coordenada coordAct : barcoAct.getCoordenadas()) {
@@ -193,7 +212,27 @@ public class InterfazJuego extends JFrame implements Observer{
 					labelsJugador.get(index).setBackground(Color.getHSBColor(28, 100, 61)); //Marron
 				}
 			}
+		}
+		if (Jugador.getMiJugador().getMiFLota().getCompleta()) {
+			this.panelColocacionBarco.setVisible(false);
+		}
+		
+		ArrayList<Barco> flotaIA = IA.getMiIA().getMiFLota().getListaBarcos();
+		for (Barco barcoAct : flotaIA) {
+			for (Coordenada coordAct : barcoAct.getCoordenadas()) {
+				int index = coordAct.getX() + coordAct.getY()*10;
+				if (coordAct.getTocado()) {
+					labelsIA.get(index).setBackground(Color.GREEN);
+				}
+			}
 		}	
+		//this.cantBombas.setText(Jugador.getMiJugador().ge);
+		if (Jugador.getMiJugador().getMiFLota().getHundida()) {
+			 JOptionPane.showMessageDialog(popUp, "GANA LA IA!!");
+		}
+		else if(IA.getMiIA().getMiFLota().getHundida()) {
+			JOptionPane.showMessageDialog(popUp, "GANA EL JUGADOR!!");
+		}
 	}
 	
 	public JRadioButton getbotonTamano1() {

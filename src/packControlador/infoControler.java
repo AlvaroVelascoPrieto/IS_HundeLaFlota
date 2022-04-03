@@ -11,11 +11,12 @@ public class infoControler implements ActionListener {
 	private ArrayList<JRadioButton> radibuttons;
 	private int tamanoSeleccionado;
 	private boolean horizontalSeleccionado;
-	private int armaSeleccionada;
+	private String armaSeleccionada;
 	
 	private infoControler() {
 		this.tamanoSeleccionado = 1;
 		this.horizontalSeleccionado = true;
+		this.armaSeleccionada = "Bomba";
 		this.radibuttons = new ArrayList<JRadioButton>();
 	}
 
@@ -47,17 +48,17 @@ public class infoControler implements ActionListener {
 			this.horizontalSeleccionado = false;
 		}
 		else if (indexBoton==6) { //Bomba
-			this.armaSeleccionada = 1;
+			this.armaSeleccionada = "Bomba";
 		}
 		
 		else if (indexBoton==7) { //Misil
-			this.armaSeleccionada = 2;
+			this.armaSeleccionada = "Misil";
 		}
 		else if (indexBoton==8) { //Escudo
-			this.armaSeleccionada = 3;
+			this.armaSeleccionada = "Escudo";
 		}
 		else if (indexBoton==9) { //Radar
-			this.armaSeleccionada = 4;
+			this.armaSeleccionada = "Radar";
 		}
 	}
 	
@@ -69,7 +70,7 @@ public class infoControler implements ActionListener {
 		return this.horizontalSeleccionado;
 	}
 	
-	public int getArmaSeleccionada(){
+	public String getArmaSeleccionada(){
 		return this.armaSeleccionada;
 	}
 	
