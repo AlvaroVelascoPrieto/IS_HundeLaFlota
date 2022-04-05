@@ -12,12 +12,12 @@ public class Armamento {
 		this.generarArmamentoInicial();
 	}
 	
-	public Arma getArma(int pArma) {
-		return this.lArmas.get(pArma);
+	public Arma getArma(int pIndice) {
+		return this.lArmas.get(pIndice);
 	}
 	
-	public Arma borrar(int pArma) {
-		return this.lArmas.remove(pArma);
+	public Arma borrar(int pIndice) {
+		return this.lArmas.remove(pIndice);
 	}
 	
 	public int getTamanoArmamento() {
