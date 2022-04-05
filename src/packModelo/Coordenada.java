@@ -22,7 +22,6 @@ public class Coordenada {
 	}
 
 	public void setTocado() {
-	
 		this.tocado = true;
 	}
 	

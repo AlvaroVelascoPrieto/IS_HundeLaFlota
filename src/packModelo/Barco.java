@@ -13,12 +13,6 @@ public class Barco {
 		this.hundido = false;
 	}
 
-	/**
-	 * 
-	 * @param pCoord
-	 * @param pTamaño
-	 * @param pHorizontal
-	 */
 	public void anadirCoordenadas(Coordenada pCoord, int pTamano, Boolean pHorizontal) {
 		for (int i=0; i<pTamano; i++) {
 			if(pHorizontal) {
@@ -32,10 +26,7 @@ public class Barco {
 		}
 	}
 
-	/**
-	 * 
-	 * @param pCoord
-	 */
+	
 	public Boolean estaEn(Coordenada pCoord) {
 		// TODO - implement Barco.estaEn
 		boolean enc=false;

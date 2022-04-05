@@ -40,39 +40,11 @@ public class Controler implements ActionListener {
 			int tamano = infoControler.getMiInfoControler().getTamanoSeleccionado();
 			boolean horizontal = infoControler.getMiInfoControler().getHorizontalSeleccionado();
 			if (horizontal) { //Horizontal
-				if (tamano==1) { //Tamaño 1
-					Jugador.getMiJugador().anadirBarco(origenBarco, 1, true);
-				}
-				else if (tamano==2) { //Tamaño 2
-					Jugador.getMiJugador().anadirBarco(origenBarco, 2, true);
-				}
-				else if (tamano==3) { //Tamaño 3
-					Jugador.getMiJugador().anadirBarco(origenBarco, 3, true);
-				}
-				else if (tamano==4) { //Tamaño 4
-					Jugador.getMiJugador().anadirBarco(origenBarco, 4, true);
-				}
-				else {
-					//Imprimir error
-				}
+					Jugador.getMiJugador().anadirBarco(origenBarco, tamano, true);
 			}
 			else { //Vertical
-				if (tamano==1) { //Tamaño 1
-					Jugador.getMiJugador().anadirBarco(origenBarco, 1, false);
-				}
-				else if (tamano==2) { //Tamaño 2
-					Jugador.getMiJugador().anadirBarco(origenBarco, 2, false);
-				}
-				else if (tamano==3) { //Tamaño 3
-					Jugador.getMiJugador().anadirBarco(origenBarco, 3, false);
-				}
-				else if (tamano==4) { //Tamaño 4
-					Jugador.getMiJugador().anadirBarco(origenBarco, 4, false);
-				}
-				else {
-					//Imprimir error
-				}
-			}
+					Jugador.getMiJugador().anadirBarco(origenBarco, tamano, false);
+			}				
 		}
 		else if (tableroIA.contains(e.getSource())) {
 			tableroIA.get(tableroIA.indexOf(e.getSource())).setBackground(Color.BLACK);

@@ -67,14 +67,14 @@ public class Jugador extends Observable {
 		}
 	}
 	
-	public void gestorAccion(Coordenada pCoord, int pTamano, Boolean pHorizontal, String pArma) {
+	/*PARA USO FUTURO public void gestorAccion(Coordenada pCoord, int pTamano, Boolean pHorizontal, String pArma) {
 		if (this.miFlota.getCompleta()) {
 			this.accionarArmamento(pCoord, pArma);
 		}
 		else {
 			this.anadirBarco(pCoord, pTamano, pHorizontal);
 		}
-	}
+	}*/
 	
 	public Flota getMiFLota() {
 		return this.miFlota;
