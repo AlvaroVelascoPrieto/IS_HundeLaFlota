@@ -32,28 +32,14 @@ public class Jugador extends Observable {
 	}
 
 	public void accionarArmamento(Coordenada pCoord, String pArma) {
-		if (pArma.equals("Bomba")) {
-			if(this.armamento.armaDisponible(pArma)) {
-				this.armamento.borrar(pArma);
-				IA.getMiIA().gestionarAtaque(pCoord, pArma);	
-			}
-		}
-		else if (pArma.equals("Misil")) {
-			if(this.armamento.armaDisponible(pArma)) {
-				this.armamento.borrar(pArma);
-				IA.getMiIA().gestionarAtaque(pCoord, pArma);
-			}
-		}
-		else if (pArma.equals("Escudo")) {
-			//Gestionar escudo
-		}
-		else {
-			//Gestionar radar
-		}
+		if(this.armamento.armaDisponible(pArma)) {
+			this.armamento.borrar(pArma);
+			IA.getMiIA().gestionarAtaque(pCoord, pArma);
+		}	
 		IA.getMiIA().accionarArmamento();
 		setChanged();
 		notifyObservers();
-	}
+	}	
 
 	public void gestionarAtaque(Coordenada pCoord, Arma pArma) {
 		if (this.miFlota.contieneBarcoEnPos(pCoord)) {
