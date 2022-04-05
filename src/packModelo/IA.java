@@ -23,22 +23,10 @@ public class IA {
 
 	public void accionarArmamento() {
 		int indiceArma = this.generarRandomIndiceArma();
-		Arma arma = this.armamento.getLArmas().get(indiceArma);
-		this.armamento.getLArmas().remove(indiceArma);
+		Arma arma = this.armamento.getArma(indiceArma);
+		this.armamento.borrar(indiceArma);
 		Coordenada coord = new Coordenada(false, this.generarRandomIndex(), this.generarRandomIndex());
-		if (arma instanceof Bomba) {
-			Jugador.getMiJugador().gestionarAtaque(coord, arma);	
-
-		}
-		else if (arma instanceof Misil) {
-			Jugador.getMiJugador().gestionarAtaque(coord, arma);
-		}
-		else if (arma instanceof Escudo) {
-			//Gestionar escudo
-		}
-		else {
-			//Gestionar radar
-		}
+		Jugador.getMiJugador().gestionarAtaque(coord, arma);		
 	}
 
 	private int generarRandomIndex() {
@@ -51,7 +39,7 @@ public class IA {
 	}
 	
 	private int generarRandomIndiceArma() {
-		return new Random().nextInt(this.armamento.getLArmas().size()-1); //Devuelve el indice de un arma
+		return new Random().nextInt(this.armamento.getTamanoArmamento()-1); //Devuelve el indice de un arma
 	}
 
 	public void anadirBarco(int pTamano) {

@@ -11,9 +11,17 @@ public class Armamento {
 		this.lArmas = new ArrayList<Arma>();
 		this.generarArmamentoInicial();
 	}
-
-	public ArrayList<Arma> getLArmas() {
-		return this.lArmas;
+	
+	public Arma getArma(int pArma) {
+		return this.lArmas.get(pArma);
+	}
+	
+	public Arma borrar(int pArma) {
+		return this.lArmas.remove(pArma);
+	}
+	
+	public int getTamanoArmamento() {
+		return this.lArmas.size();
 	}
 
 	public void borrar(String pArma) {
