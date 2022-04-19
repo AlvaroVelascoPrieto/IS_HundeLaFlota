@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import packModelo.Coordenada;
+import packModelo.GestorJuego;
 import packModelo.Jugador;
 import packVista.InterfazJuego;
 
@@ -40,17 +41,17 @@ public class Controler implements ActionListener {
 			int tamano = infoControler.getMiInfoControler().getTamanoSeleccionado();
 			boolean horizontal = infoControler.getMiInfoControler().getHorizontalSeleccionado();
 			if (horizontal) { //Horizontal
-					Jugador.getMiJugador().anadirBarco(origenBarco, tamano, true);
+					GestorJuego.getMiGestorJuego().anadirBarco(origenBarco, tamano, true);
 			}
 			else { //Vertical
-					Jugador.getMiJugador().anadirBarco(origenBarco, tamano, false);
+				GestorJuego.getMiGestorJuego().anadirBarco(origenBarco, tamano, false);
 			}				
 		}
 		else if (tableroIA.contains(e.getSource())) {
 			tableroIA.get(tableroIA.indexOf(e.getSource())).setBackground(Color.BLACK);
 			Coordenada origenAccion = new Coordenada(false,tableroIA.indexOf(e.getSource())%10,tableroIA.indexOf(e.getSource())/10);
 			String arma = infoControler.getMiInfoControler().getArmaSeleccionada();
-			Jugador.getMiJugador().accionarArmamento(origenAccion, arma);
+			GestorJuego.getMiGestorJuego().accionarArmamento(origenAccion, arma);
 		}
 	}
 	

@@ -24,6 +24,7 @@ import packControlador.infoControler;
 import packModelo.Barco;
 import packModelo.Coordenada;
 import packModelo.Flota;
+import packModelo.GestorJuego;
 import packModelo.IA;
 import packModelo.Jugador;
 
@@ -72,7 +73,7 @@ public class InterfazJuego extends JFrame implements Observer{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		inicializar();
 		setVisible(true);
-		Jugador.getMiJugador().addObserver(this);
+		GestorJuego.getMiGestorJuego().addObserver(this);
 	}
 	
 	//Inicializa los componentes de la ventana
@@ -201,7 +202,13 @@ public class InterfazJuego extends JFrame implements Observer{
 	}
 	
 	public void update(Observable o, Object arg) {
-		ArrayList<Barco> flotaJugador = Jugador.getMiJugador().getMiFLota().getListaBarcos();
+		if(arg instanceof ArrayList<?>) {
+			ArrayList<Barco> flotaJugador = (ArrayList<Barco>) ((ArrayList) arg).get(0);
+			boolean completa = (Boolean) ((ArrayList) arg).get(1);
+			ArrayList<Barco> flotaIA = (ArrayList<Barco>) ((ArrayList) arg).get(2);
+			boolean jugadorHundida = (Boolean) ((ArrayList) arg).get(3);
+			boolean iaHundida = (Boolean) ((ArrayList) arg).get(4);
+		//ArrayList<Barco> flotaJugador = Jugador.getMiJugador().getMiFLota().getListaBarcos();
 		for (Barco barcoAct : flotaJugador) {
 			for (Coordenada coordAct : barcoAct.getCoordenadas()) {
 				int index = coordAct.getX() + coordAct.getY()*10;
@@ -213,11 +220,11 @@ public class InterfazJuego extends JFrame implements Observer{
 				}
 			}
 		}
-		if (Jugador.getMiJugador().getMiFLota().getCompleta()) {
+		if (completa) {
 			this.panelColocacionBarco.setVisible(false);
 		}
 		
-		ArrayList<Barco> flotaIA = IA.getMiIA().getMiFLota().getListaBarcos();
+		//ArrayList<Barco> flotaIA = IA.getMiIA().getMiFLota().getListaBarcos();
 		for (Barco barcoAct : flotaIA) {
 			for (Coordenada coordAct : barcoAct.getCoordenadas()) {
 				int index = coordAct.getX() + coordAct.getY()*10;
@@ -227,11 +234,12 @@ public class InterfazJuego extends JFrame implements Observer{
 			}
 		}	
 		//this.cantBombas.setText(Jugador.getMiJugador().ge);
-		if (Jugador.getMiJugador().getMiFLota().getHundida()) {
+		if (jugadorHundida) {
 			 JOptionPane.showMessageDialog(popUp, "GANA LA IA!!");
 		}
-		else if(IA.getMiIA().getMiFLota().getHundida()) {
+		else if(iaHundida) {
 			JOptionPane.showMessageDialog(popUp, "GANA EL JUGADOR!!");
+		}
 		}
 	}
 	

@@ -24,9 +24,10 @@ public class Armamento {
 		return this.lArmas.size();
 	}
 
-	public void borrar(String pArma) {
+	public Arma borrar(String pArma) {
 		Arma aBorrar = this.getArma(pArma);
 		this.lArmas.remove(aBorrar);
+		return aBorrar;
 	}
 	
 	public boolean armaDisponible(String pArma) {
