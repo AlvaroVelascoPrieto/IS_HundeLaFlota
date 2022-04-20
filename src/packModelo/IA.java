@@ -1,12 +1,15 @@
 package packModelo;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class IA extends SuperJugador {
+	private ArrayList<Coordenada> targetsVistos;
 	
 	public IA() {
 		this.miFlota = new Flota();
 		this.armamento = new Armamento();
+		this.targetsVistos = new ArrayList<Coordenada>();
 	}
 	
 	public Coordenada generarRandomCoord() {
@@ -24,7 +27,6 @@ public class IA extends SuperJugador {
 
 	public Arma accionarArmamento(String pArma) {
 		int indiceArma = this.generarRandomIndiceArma();
-	
 		return this.armamento.borrar(indiceArma);
 	}
 
@@ -35,5 +37,14 @@ public class IA extends SuperJugador {
 			coord = this.generarRandomCoord();
 		}
 		this.miFlota.añadirBarco(coord, pTamano, horizontal);
+	}
+	
+	public void usarRadar(Flota pFlotaContrincante) {
+		this.armamento.getRadar().activarRadar(pFlotaContrincante);
+		targetsVistos.addAll(this.armamento.getRadar().getAvistamientos());
+	}
+	
+	public void anadirTargetVisto(Coordenada pCoord) {
+		this.targetsVistos.add(pCoord);
 	}
 }

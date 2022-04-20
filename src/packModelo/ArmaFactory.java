@@ -24,7 +24,7 @@ public class ArmaFactory {
 			return new Misil();
 		}
 		else if(pTipo=="Radar") {
-			return new Radar();
+			return new Radar(5);
 		}
 		else {
 			return new Escudo();

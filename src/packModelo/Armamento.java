@@ -58,6 +58,7 @@ public class Armamento {
 		for(int i=0;i<100;i++) {
 			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Misil"));
 		}
+		this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Radar"));
 	}
 	
 	private Iterator<Arma> getIterador(){
@@ -80,6 +81,17 @@ public class Armamento {
 				if (act instanceof Misil) {
 					return act;
 				}
+			}
+		}
+		return null;
+	}
+	
+	public Radar getRadar() {
+		Iterator<Arma> itr = this.getIterador();
+		while(itr.hasNext()) {
+			Arma act = itr.next();
+			if (act instanceof Radar) {
+				return (Radar) act;
 			}
 		}
 		return null;

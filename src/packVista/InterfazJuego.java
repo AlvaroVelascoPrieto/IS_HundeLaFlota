@@ -49,13 +49,14 @@ public class InterfazJuego extends JFrame implements Observer{
 	private JRadioButton botonVertical;
 	private ButtonGroup grupoTamano = new ButtonGroup();
 	private ButtonGroup grupoDireccion = new ButtonGroup();
-	private JPanel panelTienda;
+	private JPanel panelRadar;
 	private JPanel panelArmas;
 	private JPanel panelBotonesArmas;
 	private JRadioButton botonBomba;
 	private JRadioButton botonMisil;
 	private JRadioButton botonEscudo;
-	private JRadioButton botonRadar;
+	private JButton moverRadar;
+	private JButton consultarRadar;
 	//private JPanel panelCantidades;
 	//private JLabel cantBombas;
 	//private JLabel cantMisiles;
@@ -150,11 +151,10 @@ public class InterfazJuego extends JFrame implements Observer{
 		panelBotonesArmas.add(getbotonBomba());
 		panelBotonesArmas.add(getbotonMisil());
 		panelBotonesArmas.add(getbotonEscudo());
-		panelBotonesArmas.add(getbotonRadar());
 		grupoArmas.add(botonBomba);
 		grupoArmas.add(botonMisil);
 		grupoArmas.add(botonEscudo);
-		grupoArmas.add(botonRadar);
+		
 		//this.cantBombas = new JLabel("30");
 		//this.cantMisiles = new JLabel("30");
 		//this.cantEscudos = new JLabel("0");
@@ -167,10 +167,17 @@ public class InterfazJuego extends JFrame implements Observer{
 		//panelCantidades.add(cantEscudos);
 		//panelCantidades.add(cantRadares);
 		
-		this.panelTienda = new JPanel();
-		panelAcciones.add(panelTienda);
-		
-		
+		this.panelRadar = new JPanel();
+		panelRadar.setLayout(new GridLayout(2,1));
+		panelAcciones.add(panelRadar);
+		this.moverRadar = new JButton("Mover Radar");
+		this.consultarRadar = new JButton("Consultar Radar");		
+		this.moverRadar.addActionListener(Controler.getMiControlador());
+		this.consultarRadar.addActionListener(Controler.getMiControlador());
+		Controler.getMiControlador().registrarMoverRadar(moverRadar);
+		Controler.getMiControlador().registrarConsultarRadar(consultarRadar);
+		panelRadar.add(moverRadar);
+		panelRadar.add(consultarRadar);
 	}	
 	
 	private void crearTableros() {
@@ -208,38 +215,42 @@ public class InterfazJuego extends JFrame implements Observer{
 			ArrayList<Barco> flotaIA = (ArrayList<Barco>) ((ArrayList) arg).get(2);
 			boolean jugadorHundida = (Boolean) ((ArrayList) arg).get(3);
 			boolean iaHundida = (Boolean) ((ArrayList) arg).get(4);
-		//ArrayList<Barco> flotaJugador = Jugador.getMiJugador().getMiFLota().getListaBarcos();
-		for (Barco barcoAct : flotaJugador) {
-			for (Coordenada coordAct : barcoAct.getCoordenadas()) {
-				int index = coordAct.getX() + coordAct.getY()*10;
-				if (coordAct.getTocado()) {
-					labelsJugador.get(index).setBackground(Color.RED);
-				}
-				else {
-					labelsJugador.get(index).setBackground(Color.getHSBColor(28, 100, 61)); //Marron
-				}
-			}
-		}
-		if (completa) {
-			this.panelColocacionBarco.setVisible(false);
-		}
-		
-		//ArrayList<Barco> flotaIA = IA.getMiIA().getMiFLota().getListaBarcos();
-		for (Barco barcoAct : flotaIA) {
-			for (Coordenada coordAct : barcoAct.getCoordenadas()) {
-				int index = coordAct.getX() + coordAct.getY()*10;
-				if (coordAct.getTocado()) {
-					labelsIA.get(index).setBackground(Color.GREEN);
+			boolean radarActivo = (Boolean) ((ArrayList) arg).get(5);
+			ArrayList<Coordenada> avistamientos = (ArrayList<Coordenada>) ((ArrayList) arg).get(6);
+			for (Barco barcoAct : flotaJugador) {
+				for (Coordenada coordAct : barcoAct.getCoordenadas()) {
+					int index = coordAct.getX() + coordAct.getY()*10;
+					if (coordAct.getTocado()) {
+						labelsJugador.get(index).setBackground(Color.RED);
+					}
+					else {
+						labelsJugador.get(index).setBackground(Color.getHSBColor(28, 100, 61)); //Marron
+					}
 				}
 			}
-		}	
-		//this.cantBombas.setText(Jugador.getMiJugador().ge);
-		if (jugadorHundida) {
-			 JOptionPane.showMessageDialog(popUp, "GANA LA IA!!");
-		}
-		else if(iaHundida) {
-			JOptionPane.showMessageDialog(popUp, "GANA EL JUGADOR!!");
-		}
+			if (completa) {
+				this.panelColocacionBarco.setVisible(false);
+			}
+			if(radarActivo) {
+				for(Coordenada avistamiento : avistamientos) {
+					int index = avistamiento.getX() + avistamiento.getY()*10;
+					labelsIA.get(index).setBackground(Color.RED);
+				}
+			}
+			for (Barco barcoAct : flotaIA) {
+				for (Coordenada coordAct : barcoAct.getCoordenadas()) {
+					int index = coordAct.getX() + coordAct.getY()*10;
+					if (coordAct.getTocado()) {
+						labelsIA.get(index).setBackground(Color.GREEN);
+					}
+				}
+			}	
+			if (jugadorHundida) {
+				JOptionPane.showMessageDialog(popUp, "GANA LA IA!!");
+			}
+			else if(iaHundida) {
+				JOptionPane.showMessageDialog(popUp, "GANA EL JUGADOR!!");
+			}
 		}
 	}
 	
@@ -326,14 +337,4 @@ public class InterfazJuego extends JFrame implements Observer{
 		}
 		return botonEscudo;
 	}
-	
-	public JRadioButton getbotonRadar() {
-		if (botonRadar == null) {
-			botonRadar = new JRadioButton("Radar");
-			botonRadar.addActionListener(infoControler.getMiInfoControler());
-			infoControler.getMiInfoControler().addRadiButton(botonRadar);
-		}
-		return botonRadar;
-	}
-		
 }

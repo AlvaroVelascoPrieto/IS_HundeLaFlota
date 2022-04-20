@@ -31,6 +31,8 @@ public class GestorJuego extends Observable {
 		report.add(jugadores.getIA().getMiFlota().getListaBarcos());
 		report.add(jugadores.getJugador().getMiFlota().getHundida());
 		report.add(jugadores.getIA().getMiFlota().getHundida());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getActivo());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getAvistamientos());
 		setChanged();
 		notifyObservers(report);
 	}
@@ -46,6 +48,28 @@ public class GestorJuego extends Observable {
 		report.add(jugadores.getIA().getMiFlota().getListaBarcos());
 		report.add(jugadores.getJugador().getMiFlota().getHundida());
 		report.add(jugadores.getIA().getMiFlota().getHundida());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getActivo());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getAvistamientos());
+		setChanged();
+		notifyObservers(report);
+	}
+	
+	public void moverRadar() {
+		this.jugadores.getJugador().getMiArmamento().getRadar().moverRadar();
+		this.jugadores.getIA().getMiArmamento().getRadar().moverRadar();
+	}
+	
+	public void activarRadar() {
+		this.jugadores.getJugador().getMiArmamento().getRadar().activarRadar(this.jugadores.getIA().getMiFlota());
+		this.jugadores.getIA().usarRadar(this.jugadores.getJugador().getMiFlota());
+		ArrayList<Object> report = new ArrayList<Object>();
+		report.add(jugadores.getJugador().getMiFlota().getListaBarcos());
+		report.add(jugadores.getJugador().getMiFlota().getCompleta());
+		report.add(jugadores.getIA().getMiFlota().getListaBarcos());
+		report.add(jugadores.getJugador().getMiFlota().getHundida());
+		report.add(jugadores.getIA().getMiFlota().getHundida());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getActivo());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getAvistamientos());
 		setChanged();
 		notifyObservers(report);
 	}

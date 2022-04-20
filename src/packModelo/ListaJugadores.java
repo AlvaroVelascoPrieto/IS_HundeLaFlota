@@ -14,23 +14,23 @@ public class ListaJugadores {
 		return this.lJugadores.iterator();
 	}
 	
-	public SuperJugador getJugador() {
+	public Jugador getJugador() {
 		Iterator<SuperJugador> itr = this.getIterador();
 		while (itr.hasNext()) {
 			SuperJugador act = itr.next();
 			if (act instanceof Jugador) {
-				return act;
+				return (Jugador) act;
 			}
 		}
 		return null;
 	}
 	
-	public SuperJugador getIA() {
+	public IA getIA() {
 		Iterator<SuperJugador> itr = this.getIterador();
 		while (itr.hasNext()) {
 			SuperJugador act = itr.next();
 			if (act instanceof IA) {
-				return act;
+				return (IA) act;
 			}
 		}
 		return null;

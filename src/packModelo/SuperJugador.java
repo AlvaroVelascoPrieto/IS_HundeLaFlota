@@ -20,4 +20,8 @@ public abstract class SuperJugador {
 	public Flota getMiFlota(){
 		return this.miFlota;
 	}
+	
+	public Armamento getMiArmamento() {
+		return this.armamento;
+	}
 }

@@ -17,6 +17,8 @@ public class Controler implements ActionListener {
 	private static Controler miControlador;
 	private ArrayList<JButton> tableroJugador;
 	private ArrayList<JButton> tableroIA;
+	private JButton moverRadar;
+	private JButton consultarRadar;
 
 	private Controler() {
 		tableroJugador = new ArrayList<JButton>();
@@ -53,6 +55,12 @@ public class Controler implements ActionListener {
 			String arma = infoControler.getMiInfoControler().getArmaSeleccionada();
 			GestorJuego.getMiGestorJuego().accionarArmamento(origenAccion, arma);
 		}
+		else if (e.getSource().equals(this.moverRadar)) {
+			GestorJuego.getMiGestorJuego().moverRadar();
+		}
+		else if (e.getSource().equals(this.consultarRadar)) {
+			GestorJuego.getMiGestorJuego().activarRadar();
+		}
 	}
 	
 	
@@ -62,6 +70,14 @@ public class Controler implements ActionListener {
 	
 	public void anadirBotonIA(JButton pBoton) {
 		this.tableroIA.add(pBoton);
+	}
+	
+	public void registrarMoverRadar(JButton pBoton) {
+		this.moverRadar = pBoton;
+	}
+	
+	public void registrarConsultarRadar(JButton pBoton) {
+		this.consultarRadar = pBoton;
 	}
 
 }
