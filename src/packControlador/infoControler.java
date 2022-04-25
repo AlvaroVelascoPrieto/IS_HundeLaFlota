@@ -50,15 +50,11 @@ public class infoControler implements ActionListener {
 		else if (indexBoton==6) { //Bomba
 			this.armaSeleccionada = "Bomba";
 		}
-		
 		else if (indexBoton==7) { //Misil
 			this.armaSeleccionada = "Misil";
 		}
 		else if (indexBoton==8) { //Escudo
 			this.armaSeleccionada = "Escudo";
-		}
-		else if (indexBoton==9) { //Radar
-			this.armaSeleccionada = "Radar";
 		}
 	}
 	

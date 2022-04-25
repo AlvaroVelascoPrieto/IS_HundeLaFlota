@@ -255,7 +255,6 @@ public class Flota {
 			}
 		}
 		this.hundida = hundido;
-		System.out.println(hundido);
 	}
 
 	public boolean getCompleta() {
@@ -264,6 +263,21 @@ public class Flota {
 	
 	public boolean getHundida() {
 		return this.hundida;
+	}
+
+	public void activarEscudo(Coordenada pCoord) {
+		Iterator<Barco> itr = this.getIterador();
+		while (itr.hasNext()) {
+			Barco act = itr.next();
+			if(act.estaEn(pCoord)) {
+				act.setEscudo();
+				break;
+			}
+		}
+	}
+
+	public int getTamanoFlota() {
+		return this.listaB.size();
 	}
 
 }

@@ -38,10 +38,13 @@ public class GestorJuego extends Observable {
 	}
 	
 	public void accionarArmamento(Coordenada pCoord, String pArma) {
-		Arma ataqueJugador = this.jugadores.getJugador().accionarArmamento(pArma);
+		this.jugadores.getJugador().armamento.getRadar().desactivarRadar();
+		this.jugadores.getIA().armamento.getRadar().desactivarRadar();
+		Arma ataqueJugador = this.jugadores.getJugador().accionarArmamento(pCoord, pArma);
 		this.jugadores.getIA().gestionarAtaque(pCoord, ataqueJugador);
-		Arma ataqueIA = this.jugadores.getIA().accionarArmamento(pArma);
-		this.jugadores.getJugador().gestionarAtaque(pCoord, ataqueIA);
+		Arma ataqueIA = this.jugadores.getIA().accionarArmamento(null, null);
+		Coordenada coordIA = this.jugadores.getIA().determinarAtaque();
+		this.jugadores.getJugador().gestionarAtaque(coordIA, ataqueIA);
 		ArrayList<Object> report = new ArrayList<Object>();
 		report.add(jugadores.getJugador().getMiFlota().getListaBarcos());
 		report.add(jugadores.getJugador().getMiFlota().getCompleta());

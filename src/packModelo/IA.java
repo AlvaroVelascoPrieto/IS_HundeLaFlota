@@ -25,9 +25,14 @@ public class IA extends SuperJugador {
 		return new Random().nextInt(this.armamento.getTamanoArmamento()-1); //Devuelve el indice de un arma
 	}
 
-	public Arma accionarArmamento(String pArma) {
-		int indiceArma = this.generarRandomIndiceArma();
-		return this.armamento.borrar(indiceArma);
+	public Arma accionarArmamento(Coordenada pCoord, String pArma) {
+		Arma miArma = this.armamento.borrar(generarRandomIndiceArma());
+		if(miArma instanceof Escudo) {
+			System.out.println("ESCUDO");
+			Coordenada coordEscudo = this.getRandomBarcoNoTocado();
+			this.miFlota.activarEscudo(coordEscudo);
+		}
+		return miArma;
 	}
 
 	public void anadirBarco(Coordenada pCoord, int pTamano, boolean pHorizontal) {
@@ -46,5 +51,24 @@ public class IA extends SuperJugador {
 	
 	public void anadirTargetVisto(Coordenada pCoord) {
 		this.targetsVistos.add(pCoord);
+	}
+	
+	public Coordenada determinarAtaque() {
+		if(targetsVistos.size()!=0) {
+			return targetsVistos.remove(0);
+		}else {
+			return this.generarRandomCoord();
+		}
+	}
+
+	public Coordenada getRandomBarcoNoTocado() {
+		Barco randomBarco = this.miFlota.getListaBarcos().get(new Random().nextInt(this.miFlota.getTamanoFlota()-1));
+		while (randomBarco.getBarcoTocado()&&!this.miFlota.getHundida()) {
+			randomBarco = this.miFlota.getListaBarcos().get(new Random().nextInt(this.miFlota.getTamanoFlota()-1));
+		}
+		if(this.miFlota.getHundida()) {
+			return this.miFlota.getListaBarcos().get(new Random().nextInt(this.miFlota.getTamanoFlota()-1)).getCoordenadas().get(0);
+		}
+		return randomBarco.getCoordenadas().get(0);
 	}
 }

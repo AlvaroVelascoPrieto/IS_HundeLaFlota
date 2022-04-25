@@ -10,6 +10,7 @@ import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -220,22 +221,20 @@ public class InterfazJuego extends JFrame implements Observer{
 			for (Barco barcoAct : flotaJugador) {
 				for (Coordenada coordAct : barcoAct.getCoordenadas()) {
 					int index = coordAct.getX() + coordAct.getY()*10;
+					labelsJugador.get(index).setBackground(Color.getHSBColor(28, 100, 61)); //Marron
 					if (coordAct.getTocado()) {
 						labelsJugador.get(index).setBackground(Color.RED);
 					}
-					else {
-						labelsJugador.get(index).setBackground(Color.getHSBColor(28, 100, 61)); //Marron
+					else if(barcoAct.getEscudo()) {
+						labelsJugador.get(index).setBackground(Color.ORANGE);
+						if(barcoAct.getEscudoTocado()) {
+							labelsJugador.get(index).setBackground(Color.DARK_GRAY);
+						}
 					}
 				}
 			}
 			if (completa) {
 				this.panelColocacionBarco.setVisible(false);
-			}
-			if(radarActivo) {
-				for(Coordenada avistamiento : avistamientos) {
-					int index = avistamiento.getX() + avistamiento.getY()*10;
-					labelsIA.get(index).setBackground(Color.RED);
-				}
 			}
 			for (Barco barcoAct : flotaIA) {
 				for (Coordenada coordAct : barcoAct.getCoordenadas()) {
@@ -243,8 +242,19 @@ public class InterfazJuego extends JFrame implements Observer{
 					if (coordAct.getTocado()) {
 						labelsIA.get(index).setBackground(Color.GREEN);
 					}
+					else if(!coordAct.getTocado()&&barcoAct.getEscudoTocado()) {
+						labelsIA.get(index).setBackground(Color.DARK_GRAY);
+					}else {
+						labelsIA.get(index).setBackground(Color.BLUE);
+					}
 				}
-			}	
+			}
+			if(radarActivo) {
+				for(Coordenada avistamiento : avistamientos) {
+					int index = avistamiento.getX() + avistamiento.getY()*10;
+					labelsIA.get(index).setBackground(Color.RED);
+				}
+			}
 			if (jugadorHundida) {
 				JOptionPane.showMessageDialog(popUp, "GANA LA IA!!");
 			}

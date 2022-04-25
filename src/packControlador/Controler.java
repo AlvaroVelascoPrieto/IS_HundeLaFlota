@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 
 import packModelo.Coordenada;
 import packModelo.GestorJuego;
@@ -19,6 +20,7 @@ public class Controler implements ActionListener {
 	private ArrayList<JButton> tableroIA;
 	private JButton moverRadar;
 	private JButton consultarRadar;
+	
 
 	private Controler() {
 		tableroJugador = new ArrayList<JButton>();
@@ -34,7 +36,12 @@ public class Controler implements ActionListener {
 
 
 	public void actionPerformed(ActionEvent e) {
-		if (tableroJugador.contains(e.getSource())){
+		if(infoControler.getMiInfoControler().getArmaSeleccionada().equals("Escudo")) {
+			System.out.println("e1");
+			Coordenada origenAccion = new Coordenada(false,tableroJugador.indexOf(e.getSource())%10,tableroJugador.indexOf(e.getSource())/10);
+			GestorJuego.getMiGestorJuego().accionarArmamento(origenAccion, "Escudo");
+		}
+		else if (tableroJugador.contains(e.getSource())){
 			System.out.print("pX: ");
 			System.out.println(tableroJugador.indexOf(e.getSource())%10);
 			System.out.print("pY: ");

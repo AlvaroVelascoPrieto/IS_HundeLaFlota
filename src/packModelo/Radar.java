@@ -34,11 +34,16 @@ public class Radar extends Arma {
 		this.coord=this.generarRandomCoord();
 	}
 	
+	public void desactivarRadar() {
+		this.activo = false;
+	}
+	
 	public Coordenada getPos() {
 		return this.coord;
 	}
 	
 	private void infoRadar(Flota pFlotaContrincante){
+		this.avistamientos = new ArrayList<Coordenada>();
 		if(this.coord.getX()==0) {//Fila superior
 			if (this.coord.getY()==0) {//Esquina superior izq
 				if(pFlotaContrincante.contieneBarcoEnPos(new Coordenada(false,this.coord.getX(),this.coord.getY()))) {

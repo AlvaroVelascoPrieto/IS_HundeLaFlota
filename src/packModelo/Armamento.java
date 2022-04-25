@@ -12,10 +12,6 @@ public class Armamento {
 		this.generarArmamentoInicial();
 	}
 	
-	public Arma getArma(int pIndice) {
-		return this.lArmas.get(pIndice);
-	}
-	
 	public Arma borrar(int pIndice) {
 		return this.lArmas.remove(pIndice);
 	}
@@ -48,6 +44,14 @@ public class Armamento {
 				}
 			}
 		}
+		else if(pArma == "Escudo") {
+			while(itr.hasNext()) {
+				Arma act = itr.next();
+				if(act instanceof Escudo) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
@@ -57,6 +61,9 @@ public class Armamento {
 		}
 		for(int i=0;i<100;i++) {
 			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Misil"));
+		}
+		for(int i=0;i<10;i++) {
+			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Escudo"));
 		}
 		this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Radar"));
 	}
