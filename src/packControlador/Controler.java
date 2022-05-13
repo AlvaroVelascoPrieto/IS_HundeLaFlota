@@ -20,6 +20,8 @@ public class Controler implements ActionListener {
 	private ArrayList<JButton> tableroIA;
 	private JButton moverRadar;
 	private JButton consultarRadar;
+	private JButton comprarMisil;
+	private JButton comprarEscudo;
 	
 
 	private Controler() {
@@ -36,10 +38,29 @@ public class Controler implements ActionListener {
 
 
 	public void actionPerformed(ActionEvent e) {
-		if(infoControler.getMiInfoControler().getArmaSeleccionada().equals("Escudo")) {
-			System.out.println("e1");
+		if (e.getSource().equals(this.moverRadar)) {
+			GestorJuego.getMiGestorJuego().moverRadar();
+		}
+		else if (e.getSource().equals(this.consultarRadar)) {
+			GestorJuego.getMiGestorJuego().activarRadar();
+		}
+		else if (e.getSource().equals(this.comprarMisil)) {
+			System.out.println("COMPRA EL MISIL");
+			GestorJuego.getMiGestorJuego().realizarComprar("Misil");
+		}
+		else if (e.getSource().equals(this.comprarEscudo)) {
+			System.out.println("COMPRA EL ESCUDO");
+			GestorJuego.getMiGestorJuego().realizarComprar("Escudo");
+		}
+		else if(infoControler.getMiInfoControler().getCompleta()&&tableroJugador.contains(e.getSource())) {
 			Coordenada origenAccion = new Coordenada(false,tableroJugador.indexOf(e.getSource())%10,tableroJugador.indexOf(e.getSource())/10);
-			GestorJuego.getMiGestorJuego().accionarArmamento(origenAccion, "Escudo");
+			if(infoControler.getMiInfoControler().getArmaDefensaSeleccionada()=="Reparacion") {
+				GestorJuego.getMiGestorJuego().repararBarco(origenAccion);
+			}
+			else {
+				GestorJuego.getMiGestorJuego().accionarArmamento(origenAccion, infoControler.getMiInfoControler().getArmaDefensaSeleccionada());
+			}
+			
 		}
 		else if (tableroJugador.contains(e.getSource())){
 			System.out.print("pX: ");
@@ -59,14 +80,8 @@ public class Controler implements ActionListener {
 		else if (tableroIA.contains(e.getSource())) {
 			tableroIA.get(tableroIA.indexOf(e.getSource())).setBackground(Color.BLACK);
 			Coordenada origenAccion = new Coordenada(false,tableroIA.indexOf(e.getSource())%10,tableroIA.indexOf(e.getSource())/10);
-			String arma = infoControler.getMiInfoControler().getArmaSeleccionada();
+			String arma = infoControler.getMiInfoControler().getArmaAtaqueSeleccionada();
 			GestorJuego.getMiGestorJuego().accionarArmamento(origenAccion, arma);
-		}
-		else if (e.getSource().equals(this.moverRadar)) {
-			GestorJuego.getMiGestorJuego().moverRadar();
-		}
-		else if (e.getSource().equals(this.consultarRadar)) {
-			GestorJuego.getMiGestorJuego().activarRadar();
 		}
 	}
 	
@@ -86,5 +101,14 @@ public class Controler implements ActionListener {
 	public void registrarConsultarRadar(JButton pBoton) {
 		this.consultarRadar = pBoton;
 	}
+
+	public void registrarComprarMisil(JButton pComprarMisil) {
+		this.comprarMisil = pComprarMisil;	
+	}
+	
+	public void registrarComprarEscudo(JButton pComprarEscudo) {
+		this.comprarEscudo = pComprarEscudo;
+	}
+	
 
 }

@@ -33,6 +33,12 @@ public class GestorJuego extends Observable {
 		report.add(jugadores.getIA().getMiFlota().getHundida());
 		report.add(jugadores.getJugador().getMiArmamento().getRadar().getActivo());
 		report.add(jugadores.getJugador().getMiArmamento().getRadar().getAvistamientos());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getConsultasRestantes());
+		report.add(jugadores.getJugador().getMiArmamento().getNumMisiles());
+		report.add(jugadores.getJugador().getMiArmamento().getNumEscudos());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
+		report.add(jugadores.getJugador().getDinero());
 		setChanged();
 		notifyObservers(report);
 	}
@@ -53,6 +59,34 @@ public class GestorJuego extends Observable {
 		report.add(jugadores.getIA().getMiFlota().getHundida());
 		report.add(jugadores.getJugador().getMiArmamento().getRadar().getActivo());
 		report.add(jugadores.getJugador().getMiArmamento().getRadar().getAvistamientos());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getConsultasRestantes());
+		report.add(jugadores.getJugador().getMiArmamento().getNumMisiles());
+		report.add(jugadores.getJugador().getMiArmamento().getNumEscudos());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
+		report.add(jugadores.getJugador().getDinero());
+		setChanged();
+		notifyObservers(report);
+	}
+	
+	public void repararBarco(Coordenada pCoord) {
+		this.jugadores.getJugador().repararBarco(pCoord);
+		Coordenada barcoTocado = this.jugadores.getIA().getRandomBarcoTocado();
+		this.jugadores.getIA().repararBarco(barcoTocado);
+		ArrayList<Object> report = new ArrayList<Object>();
+		report.add(jugadores.getJugador().getMiFlota().getListaBarcos());
+		report.add(jugadores.getJugador().getMiFlota().getCompleta());
+		report.add(jugadores.getIA().getMiFlota().getListaBarcos());
+		report.add(jugadores.getJugador().getMiFlota().getHundida());
+		report.add(jugadores.getIA().getMiFlota().getHundida());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getActivo());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getAvistamientos());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getConsultasRestantes());
+		report.add(jugadores.getJugador().getMiArmamento().getNumMisiles());
+		report.add(jugadores.getJugador().getMiArmamento().getNumEscudos());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
+		report.add(jugadores.getJugador().getDinero());
 		setChanged();
 		notifyObservers(report);
 	}
@@ -73,6 +107,54 @@ public class GestorJuego extends Observable {
 		report.add(jugadores.getIA().getMiFlota().getHundida());
 		report.add(jugadores.getJugador().getMiArmamento().getRadar().getActivo());
 		report.add(jugadores.getJugador().getMiArmamento().getRadar().getAvistamientos());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getConsultasRestantes());
+		report.add(jugadores.getJugador().getMiArmamento().getNumMisiles());
+		report.add(jugadores.getJugador().getMiArmamento().getNumEscudos());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
+		report.add(jugadores.getJugador().getDinero());
+		setChanged();
+		notifyObservers(report);
+	}
+	
+	public void realizarComprar(String pArma){
+		if (Almacen.getMiAlmacen().getArmamento().armaDisponible(pArma)){
+			Arma aComprar = Almacen.getMiAlmacen().getArmamento().getArma(pArma);
+			if(jugadores.getJugador().tieneDinero(aComprar)){
+				Almacen.getMiAlmacen().getArmamento().borrar(pArma);
+				jugadores.getJugador().decrementarDinero(aComprar);
+				jugadores.getJugador().armamento.anadirArma(aComprar);
+			}
+			
+		}
+		
+		int indexCompraIA = jugadores.getIA().generarRandomIndiceArma(Almacen.getMiAlmacen().getArmamento().getTamanoArmamento()-1);
+		Arma compraIA = Almacen.getMiAlmacen().getArmamento().getArma(indexCompraIA);
+		if(jugadores.getIA().tieneDinero(compraIA)){
+			if (compraIA instanceof Misil){
+				jugadores.getIA().decrementarDinero(compraIA);
+				
+			}
+			else if (compraIA instanceof Escudo){
+				jugadores.getIA().decrementarDinero(compraIA);
+			}
+			Almacen.getMiAlmacen().getArmamento().borrar(indexCompraIA);
+			jugadores.getIA().armamento.anadirArma(compraIA);
+		}
+		ArrayList<Object> report = new ArrayList<Object>();
+		report.add(jugadores.getJugador().getMiFlota().getListaBarcos());
+		report.add(jugadores.getJugador().getMiFlota().getCompleta());
+		report.add(jugadores.getIA().getMiFlota().getListaBarcos());
+		report.add(jugadores.getJugador().getMiFlota().getHundida());
+		report.add(jugadores.getIA().getMiFlota().getHundida());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getActivo());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getAvistamientos());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getConsultasRestantes());
+		report.add(jugadores.getJugador().getMiArmamento().getNumMisiles());
+		report.add(jugadores.getJugador().getMiArmamento().getNumEscudos());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
+		report.add(jugadores.getJugador().getDinero());
 		setChanged();
 		notifyObservers(report);
 	}

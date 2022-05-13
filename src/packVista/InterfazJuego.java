@@ -42,6 +42,7 @@ public class InterfazJuego extends JFrame implements Observer{
 	private JPanel panelColocacionBarco;
 	private JPanel panelTamanoBarco;
 	private JPanel panelDireccionBarco;
+	private JPanel panelTienda;
 	private JRadioButton botonTamano1;
 	private JRadioButton botonTamano2;
 	private JRadioButton botonTamano3;
@@ -52,18 +53,18 @@ public class InterfazJuego extends JFrame implements Observer{
 	private ButtonGroup grupoDireccion = new ButtonGroup();
 	private JPanel panelRadar;
 	private JPanel panelArmas;
-	private JPanel panelBotonesArmas;
+	private JPanel panelArmasAtaque;
+	private JPanel panelArmasDefensa;
 	private JRadioButton botonBomba;
 	private JRadioButton botonMisil;
 	private JRadioButton botonEscudo;
+	private JRadioButton botonReparacion;
 	private JButton moverRadar;
 	private JButton consultarRadar;
-	//private JPanel panelCantidades;
-	//private JLabel cantBombas;
-	//private JLabel cantMisiles;
-	//private JLabel cantEscudos;
-	//private JLabel cantRadares;
-	private ButtonGroup grupoArmas = new ButtonGroup();
+	private JButton comprarMisil;
+	private JButton comprarEscudo;
+	private ButtonGroup grupoArmasAtaque = new ButtonGroup();
+	private ButtonGroup grupoArmasDefensa = new ButtonGroup();
 	//private JLabel tituloArmas;
 	private JFrame popUp = new JFrame();
 	
@@ -146,15 +147,25 @@ public class InterfazJuego extends JFrame implements Observer{
 		panelAcciones.add(panelArmas);
 		panelArmas.setLayout(new GridLayout(2,1));
 		
-		this.panelBotonesArmas = new JPanel();
-		panelBotonesArmas.setLayout(new GridLayout(1,4));
-		panelArmas.add(panelBotonesArmas);
-		panelBotonesArmas.add(getbotonBomba());
-		panelBotonesArmas.add(getbotonMisil());
-		panelBotonesArmas.add(getbotonEscudo());
-		grupoArmas.add(botonBomba);
-		grupoArmas.add(botonMisil);
-		grupoArmas.add(botonEscudo);
+		this.panelArmasAtaque = new JPanel();
+		panelArmasAtaque.setLayout(new GridLayout(1,3));
+		panelArmas.add(panelArmasAtaque);
+		panelArmasAtaque.add(new JLabel("Armas de ataque"));
+		panelArmasAtaque.add(getbotonBomba());
+		panelArmasAtaque.add(getbotonMisil());
+		grupoArmasAtaque.add(botonBomba);
+		grupoArmasAtaque.add(botonMisil);
+		
+		
+		this.panelArmasDefensa = new JPanel();
+		panelArmasDefensa.setLayout(new GridLayout(1,3));
+		panelArmas.add(panelArmasDefensa);
+		panelArmasDefensa.add(new JLabel("Armas de defensa"));
+		panelArmasDefensa.add(getbotonEscudo());
+		panelArmasDefensa.add(getbotonReparacion());
+		grupoArmasDefensa.add(botonEscudo);
+		grupoArmasDefensa.add(botonReparacion);
+		
 		
 		//this.cantBombas = new JLabel("30");
 		//this.cantMisiles = new JLabel("30");
@@ -169,7 +180,7 @@ public class InterfazJuego extends JFrame implements Observer{
 		//panelCantidades.add(cantRadares);
 		
 		this.panelRadar = new JPanel();
-		panelRadar.setLayout(new GridLayout(2,1));
+		panelRadar.setLayout(new GridLayout(3,1));
 		panelAcciones.add(panelRadar);
 		this.moverRadar = new JButton("Mover Radar");
 		this.consultarRadar = new JButton("Consultar Radar");		
@@ -177,8 +188,18 @@ public class InterfazJuego extends JFrame implements Observer{
 		this.consultarRadar.addActionListener(Controler.getMiControlador());
 		Controler.getMiControlador().registrarMoverRadar(moverRadar);
 		Controler.getMiControlador().registrarConsultarRadar(consultarRadar);
+		panelRadar.add(new JLabel("GESTION RADAR"));
 		panelRadar.add(moverRadar);
 		panelRadar.add(consultarRadar);
+		
+		this.panelTienda = new JPanel();
+		this.panelAcciones.add(panelTienda, 3);
+		this.comprarMisil = new JButton("Comprar Misil");
+		this.comprarEscudo = new JButton("Comprar Escudo");		
+		this.comprarMisil.addActionListener(Controler.getMiControlador());
+		this.comprarEscudo.addActionListener(Controler.getMiControlador());
+		Controler.getMiControlador().registrarComprarMisil(comprarMisil);
+		Controler.getMiControlador().registrarComprarEscudo(comprarEscudo);
 	}	
 	
 	private void crearTableros() {
@@ -218,6 +239,12 @@ public class InterfazJuego extends JFrame implements Observer{
 			boolean iaHundida = (Boolean) ((ArrayList) arg).get(4);
 			boolean radarActivo = (Boolean) ((ArrayList) arg).get(5);
 			ArrayList<Coordenada> avistamientos = (ArrayList<Coordenada>) ((ArrayList) arg).get(6);
+			int consultasRestantes = (Integer) ((ArrayList) arg).get(7);
+			int numMisilesJugador = (Integer) ((ArrayList) arg).get(8);
+			int numEscudosJugador = (Integer) ((ArrayList) arg).get(9);
+			int numMisilesAlmacen = (Integer) ((ArrayList) arg).get(10);
+			int numEscudosAlmacen = (Integer) ((ArrayList) arg).get(11);
+			int dineroRestante = (Integer) ((ArrayList) arg).get(12);
 			for (Barco barcoAct : flotaJugador) {
 				for (Coordenada coordAct : barcoAct.getCoordenadas()) {
 					int index = coordAct.getX() + coordAct.getY()*10;
@@ -235,6 +262,35 @@ public class InterfazJuego extends JFrame implements Observer{
 			}
 			if (completa) {
 				this.panelColocacionBarco.setVisible(false);
+				this.panelColocacionBarco = new JPanel();
+				this.panelColocacionBarco.setLayout(new GridLayout(2,4,0,0));
+				this.panelColocacionBarco.add(new JLabel("Misiles"));
+				this.panelColocacionBarco.add(new JLabel("Escudos"));
+				this.panelColocacionBarco.add(new JLabel("Consultas"));
+				this.panelColocacionBarco.add(new JLabel("Dinero"));
+				this.panelColocacionBarco.add(new JLabel(Integer.toString(numMisilesJugador)));
+				this.panelColocacionBarco.add(new JLabel(Integer.toString(numEscudosJugador)));
+				this.panelColocacionBarco.add(new JLabel(Integer.toString(consultasRestantes)));
+				this.panelColocacionBarco.add(new JLabel(Integer.toString(dineroRestante)));
+				this.panelColocacionBarco.setVisible(true);
+				this.panelAcciones.remove(0);
+				this.panelAcciones.add(this.panelColocacionBarco, 0);
+				
+				this.panelTienda = new JPanel();
+				this.panelTienda.setVisible(false);
+				this.panelTienda.setLayout(new GridLayout(4,2,0,0));
+				this.panelTienda.add(new JLabel("Almacen de la TIENDA"));
+				this.panelTienda.add(new JLabel(" "));
+				this.panelTienda.add(new JLabel("Misiles"));
+				this.panelTienda.add(new JLabel("Escudos"));
+				this.panelTienda.add(new JLabel(Integer.toString(numMisilesAlmacen)));
+				this.panelTienda.add(new JLabel(Integer.toString(numEscudosAlmacen)));
+				this.panelTienda.add(this.comprarMisil);
+				this.panelTienda.add(this.comprarEscudo);
+				this.panelTienda.setVisible(true);
+				this.panelAcciones.remove(3);
+				this.panelAcciones.add(this.panelTienda, 3);
+				infoControler.getMiInfoControler().setCompleta(true);
 			}
 			for (Barco barcoAct : flotaIA) {
 				for (Coordenada coordAct : barcoAct.getCoordenadas()) {
@@ -344,7 +400,17 @@ public class InterfazJuego extends JFrame implements Observer{
 			botonEscudo = new JRadioButton("Escudo");
 			botonEscudo.addActionListener(infoControler.getMiInfoControler());
 			infoControler.getMiInfoControler().addRadiButton(botonEscudo);
+			botonEscudo.setSelected(true);
 		}
 		return botonEscudo;
+	}
+	
+	public JRadioButton getbotonReparacion() {
+		if (botonReparacion == null) {
+			botonReparacion = new JRadioButton("Reparacion");
+			botonReparacion.addActionListener(infoControler.getMiInfoControler());
+			infoControler.getMiInfoControler().addRadiButton(botonReparacion);
+		}
+		return botonReparacion;
 	}
 }

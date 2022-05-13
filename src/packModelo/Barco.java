@@ -126,4 +126,15 @@ public class Barco {
 		}
 		return estaTocado;
 	}
+	
+	public void reparar() {
+		Iterator<Coordenada> itr = this.getIterador();
+		while (itr.hasNext()) {
+			Coordenada act = itr.next();
+			if(act.getTocado()) {
+				act.reparar();
+			}
+		}
+	}
+	
 }

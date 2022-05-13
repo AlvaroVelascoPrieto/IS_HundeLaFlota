@@ -36,5 +36,8 @@ public class Coordenada {
 	public boolean getTocado() {
 		return this.tocado;
 	}
-
+	
+	public void reparar() {
+		this.tocado = false;
+	}
 }

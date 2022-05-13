@@ -160,4 +160,9 @@ public class Radar extends Arma {
 	public boolean getActivo() {
 		return this.activo;
 	}
+
+	public int getConsultasRestantes() {
+		// TODO Auto-generated method stub
+		return this.consultas;
+	}
 }

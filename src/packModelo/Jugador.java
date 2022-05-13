@@ -5,13 +5,12 @@ public class Jugador extends SuperJugador{
 	public Jugador() {
 		this.miFlota = new Flota();
 		this.armamento = new Armamento();
+		this.dinero = 100;
 	}
 
 	public Arma accionarArmamento(Coordenada pCoord, String pArma) {
 		if(this.armamento.armaDisponible(pArma)) {
-			System.out.println("e2");
 			if(pArma.equals("Escudo")) {
-				System.out.println("e3");
 				this.miFlota.activarEscudo(pCoord);
 			}
 			return this.armamento.borrar(pArma);
@@ -23,4 +22,9 @@ public class Jugador extends SuperJugador{
 			this.miFlota.añadirBarco(pCoord, pTamano, pHorizontal);
 			this.miFlota.comprobarCompleta();
 	}
+
+	public int getDinero() {
+		return this.dinero;
+	}
+
 }

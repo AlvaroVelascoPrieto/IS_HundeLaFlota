@@ -22,7 +22,9 @@ public class Armamento {
 
 	public Arma borrar(String pArma) {
 		Arma aBorrar = this.getArma(pArma);
+		System.out.println(this.getNumEscudos());
 		this.lArmas.remove(aBorrar);
+		System.out.println(this.getNumEscudos());
 		return aBorrar;
 	}
 	
@@ -56,13 +58,13 @@ public class Armamento {
 	}
 
 	public void generarArmamentoInicial() {
-		for(int i=0;i<100;i++) {
+		for(int i=0;i<1000;i++) {
 			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Bomba"));
 		}
-		for(int i=0;i<100;i++) {
+		for(int i=0;i<10;i++) {
 			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Misil"));
 		}
-		for(int i=0;i<10;i++) {
+		for(int i=0;i<3;i++) {
 			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Escudo"));
 		}
 		this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Radar"));
@@ -72,7 +74,7 @@ public class Armamento {
 		return this.lArmas.iterator();
 	}
 	
-	private Arma getArma(String pArma) {
+	public Arma getArma(String pArma) {
 		Iterator<Arma> itr = this.getIterador();
 		if(pArma=="Bomba") {
 			while(itr.hasNext()) {
@@ -90,6 +92,15 @@ public class Armamento {
 				}
 			}
 		}
+		else if(pArma=="Escudo") {
+			while(itr.hasNext()) {
+				Arma act = itr.next();
+				if (act instanceof Escudo) {
+					System.out.println("weeeeeeee");
+					return act;
+				}
+			}
+		}
 		return null;
 	}
 	
@@ -102,6 +113,47 @@ public class Armamento {
 			}
 		}
 		return null;
+	}
+	
+	public void GenerarArmamentoAlmacen(){
+		for(int i=0;i<10;i++) {
+			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Misil"));
+		}
+		for(int i=0;i<6;i++) {
+			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Escudo"));
+		}
+	}
+
+	public void anadirArma(Arma pArma){
+		this.lArmas.add(pArma);
+	}
+
+	public Arma getArma(int indexCompraIA) {
+		return this.lArmas.get(indexCompraIA);
+	}
+	
+	public int getNumMisiles() {
+		Iterator<Arma> itr = this.getIterador();
+		int cont = 0;
+		while (itr.hasNext()) {
+			Arma act = itr.next();
+			if(act instanceof Misil) {
+				cont += 1; 
+			}
+		}
+		return cont;
+	}
+	
+	public int getNumEscudos() {
+		Iterator<Arma> itr = this.getIterador();
+		int cont = 0;
+		while (itr.hasNext()) {
+			Arma act = itr.next();
+			if(act instanceof Escudo) {
+				cont += 1; 
+			}
+		}
+		return cont;
 	}
 
 }

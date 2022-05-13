@@ -3,6 +3,7 @@ package packModelo;
 public abstract class SuperJugador {
 	protected Flota miFlota;
 	protected Armamento armamento;
+	protected int dinero;
 	
 	public abstract Arma accionarArmamento(Coordenada pCoord, String pArma);
 	public abstract void anadirBarco(Coordenada pCoord, int pTamano, boolean pHorizontal);
@@ -29,11 +30,38 @@ public abstract class SuperJugador {
 			}
 		}
 	}
+	
+	public void repararBarco(Coordenada pCoord) {
+		if(dinero>=25) {
+			this.dinero-=25;
+			miFlota.repararBarco(pCoord);
+		}
+	}
+	
 	public Flota getMiFlota(){
 		return this.miFlota;
 	}
 	
 	public Armamento getMiArmamento() {
 		return this.armamento;
+	}
+	
+	public boolean tieneDinero(Arma pArma){
+		if (pArma instanceof Misil){
+			return this.dinero>=10;
+		}
+		else if (pArma instanceof Escudo){
+			return this.dinero>=20;
+		}
+		return false;
+	}
+	
+	public void decrementarDinero(Arma pArma) {
+		if (pArma instanceof Misil){
+			this.dinero-=10;
+		}
+		else if (pArma instanceof Escudo){
+			this.dinero-=20;
+		}
 	}
 }

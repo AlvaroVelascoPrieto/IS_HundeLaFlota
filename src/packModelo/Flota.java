@@ -270,7 +270,9 @@ public class Flota {
 		while (itr.hasNext()) {
 			Barco act = itr.next();
 			if(act.estaEn(pCoord)) {
-				act.setEscudo();
+				if(!act.getBarcoTocado()) {
+					act.setEscudo();
+				}
 				break;
 			}
 		}
@@ -278,6 +280,22 @@ public class Flota {
 
 	public int getTamanoFlota() {
 		return this.listaB.size();
+	}
+	
+	public void repararBarco(Coordenada pCoord) {
+		Barco aReparar = this.getBarcoEnPos(pCoord);
+		aReparar.reparar();
+	}
+
+	public boolean hayAlgunTocado() {
+		Iterator<Barco> itr = this.getIterador();
+		while(itr.hasNext()) {
+			Barco act = itr.next();
+			if(act.getBarcoTocado()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
