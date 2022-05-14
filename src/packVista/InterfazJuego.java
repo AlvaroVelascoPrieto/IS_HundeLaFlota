@@ -245,6 +245,9 @@ public class InterfazJuego extends JFrame implements Observer{
 			int numMisilesAlmacen = (Integer) ((ArrayList) arg).get(10);
 			int numEscudosAlmacen = (Integer) ((ArrayList) arg).get(11);
 			int dineroRestante = (Integer) ((ArrayList) arg).get(12);
+			Coordenada posRadar = (Coordenada) ((ArrayList) arg).get(13);
+			boolean cambioRadar = (Boolean) ((ArrayList) arg).get(14);
+			Coordenada posAntRadar = (Coordenada) ((ArrayList) arg).get(15);
 			for (Barco barcoAct : flotaJugador) {
 				for (Coordenada coordAct : barcoAct.getCoordenadas()) {
 					int index = coordAct.getX() + coordAct.getY()*10;
@@ -292,22 +295,36 @@ public class InterfazJuego extends JFrame implements Observer{
 				this.panelAcciones.add(this.panelTienda, 3);
 				infoControler.getMiInfoControler().setCompleta(true);
 			}
+			if(!radarActivo) {
+				int index = posRadar.getX() + posRadar.getY()*10;
+				labelsIA.get(index).setBackground(Color.CYAN);
+			}
+			if(cambioRadar) {
+				int index = posRadar.getX() + posRadar.getY()*10;
+				labelsIA.get(index).setBackground(Color.CYAN);
+				index = posAntRadar.getX() + posAntRadar.getY()*10;
+				labelsIA.get(index).setBackground(Color.BLUE);
+			}
 			for (Barco barcoAct : flotaIA) {
 				for (Coordenada coordAct : barcoAct.getCoordenadas()) {
 					int index = coordAct.getX() + coordAct.getY()*10;
 					if (coordAct.getTocado()) {
 						labelsIA.get(index).setBackground(Color.GREEN);
 					}
-					else if(!coordAct.getTocado()&&barcoAct.getEscudoTocado()) {
+					else if(!coordAct.getTocado()&&coordAct.getEscudoTocado()) {
 						labelsIA.get(index).setBackground(Color.DARK_GRAY);
+					}else if(!coordAct.getTocado()&&coordAct.esCoordenada(posRadar)) {
+						labelsIA.get(index).setBackground(Color.CYAN);
 					}else {
 						labelsIA.get(index).setBackground(Color.BLUE);
 					}
 				}
 			}
 			if(radarActivo) {
+				int index = posRadar.getX() + posRadar.getY()*10;
+				labelsIA.get(index).setBackground(Color.CYAN);
 				for(Coordenada avistamiento : avistamientos) {
-					int index = avistamiento.getX() + avistamiento.getY()*10;
+					index = avistamiento.getX() + avistamiento.getY()*10;
 					labelsIA.get(index).setBackground(Color.RED);
 				}
 			}

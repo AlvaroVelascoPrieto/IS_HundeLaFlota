@@ -12,7 +12,7 @@ public abstract class SuperJugador {
 			if(this.miFlota.getBarcoEnPos(pCoord).getEscudo()) {
 				System.out.print("Esc activo");
 				if(pArma instanceof Bomba) {
-					this.miFlota.getBarcoEnPos(pCoord).tocarEscudo();
+					this.miFlota.getBarcoEnPos(pCoord).tocarEscudo(pCoord);
 				}
 				else if (pArma instanceof Misil) {
 					this.miFlota.getBarcoEnPos(pCoord).romperEscudo();	

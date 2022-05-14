@@ -8,6 +8,7 @@ public class Radar extends Arma {
 
 	private int consultas;
 	private Coordenada coord;
+	private Coordenada coordAnt;
 	private boolean activo;
 	private ArrayList<Coordenada> avistamientos;
 
@@ -31,6 +32,7 @@ public class Radar extends Arma {
 	}
 	
 	public void moverRadar() {
+		this.coordAnt=this.coord;
 		this.coord=this.generarRandomCoord();
 	}
 	
@@ -40,6 +42,10 @@ public class Radar extends Arma {
 	
 	public Coordenada getPos() {
 		return this.coord;
+	}
+	
+	public Coordenada getPosAnt() {
+		return this.coordAnt;
 	}
 	
 	private void infoRadar(Flota pFlotaContrincante){

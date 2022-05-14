@@ -3,6 +3,7 @@ package packModelo;
 public class Coordenada {
 
 	private Boolean tocado;
+	private Boolean escudoTocado;
 	private Integer x;
 	private Integer y;
 
@@ -10,6 +11,7 @@ public class Coordenada {
 		this.tocado = pTocado;
 		this.x = pX;
 		this.y = pY;
+		this.escudoTocado = false;
 	}
 
 	public Boolean esCoordenada(Coordenada pCoord) {
@@ -40,4 +42,13 @@ public class Coordenada {
 	public void reparar() {
 		this.tocado = false;
 	}
+
+	public boolean getEscudoTocado() {
+		return this.escudoTocado;
+	}
+	
+	public void setEscudoTocado(boolean pEstado){
+		this.escudoTocado = pEstado;
+	}
+	
 }

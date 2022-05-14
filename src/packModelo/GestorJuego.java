@@ -39,6 +39,9 @@ public class GestorJuego extends Observable {
 		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
 		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
 		report.add(jugadores.getJugador().getDinero());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPos());
+		report.add(false);
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPosAnt());
 		setChanged();
 		notifyObservers(report);
 	}
@@ -65,6 +68,9 @@ public class GestorJuego extends Observable {
 		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
 		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
 		report.add(jugadores.getJugador().getDinero());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPos());
+		report.add(false);
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPosAnt());
 		setChanged();
 		notifyObservers(report);
 	}
@@ -87,6 +93,9 @@ public class GestorJuego extends Observable {
 		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
 		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
 		report.add(jugadores.getJugador().getDinero());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPos());
+		report.add(false);
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPosAnt());
 		setChanged();
 		notifyObservers(report);
 	}
@@ -94,6 +103,25 @@ public class GestorJuego extends Observable {
 	public void moverRadar() {
 		this.jugadores.getJugador().getMiArmamento().getRadar().moverRadar();
 		this.jugadores.getIA().getMiArmamento().getRadar().moverRadar();
+		ArrayList<Object> report = new ArrayList<Object>();
+		report.add(jugadores.getJugador().getMiFlota().getListaBarcos());
+		report.add(jugadores.getJugador().getMiFlota().getCompleta());
+		report.add(jugadores.getIA().getMiFlota().getListaBarcos());
+		report.add(jugadores.getJugador().getMiFlota().getHundida());
+		report.add(jugadores.getIA().getMiFlota().getHundida());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getActivo());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getAvistamientos());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getConsultasRestantes());
+		report.add(jugadores.getJugador().getMiArmamento().getNumMisiles());
+		report.add(jugadores.getJugador().getMiArmamento().getNumEscudos());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
+		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
+		report.add(jugadores.getJugador().getDinero());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPos());
+		report.add(true);
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPosAnt());
+		setChanged();
+		notifyObservers(report);
 	}
 	
 	public void activarRadar() {
@@ -113,6 +141,9 @@ public class GestorJuego extends Observable {
 		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
 		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
 		report.add(jugadores.getJugador().getDinero());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPos());
+		report.add(false);
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPosAnt());
 		setChanged();
 		notifyObservers(report);
 	}
@@ -155,6 +186,9 @@ public class GestorJuego extends Observable {
 		report.add(Almacen.getMiAlmacen().getArmamento().getNumMisiles());
 		report.add(Almacen.getMiAlmacen().getArmamento().getNumEscudos());
 		report.add(jugadores.getJugador().getDinero());
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPos());
+		report.add(false);
+		report.add(jugadores.getJugador().getMiArmamento().getRadar().getPosAnt());
 		setChanged();
 		notifyObservers(report);
 	}

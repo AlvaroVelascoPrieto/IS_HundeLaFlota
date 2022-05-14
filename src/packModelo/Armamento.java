@@ -58,13 +58,13 @@ public class Armamento {
 	}
 
 	public void generarArmamentoInicial() {
-		for(int i=0;i<1000;i++) {
+		for(int i=0;i<100;i++) {
 			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Bomba"));
 		}
 		for(int i=0;i<10;i++) {
 			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Misil"));
 		}
-		for(int i=0;i<3;i++) {
+		for(int i=0;i<4;i++) {
 			this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Escudo"));
 		}
 		this.lArmas.add(ArmaFactory.getMiArmaFactory().createArma("Radar"));
@@ -96,7 +96,6 @@ public class Armamento {
 			while(itr.hasNext()) {
 				Arma act = itr.next();
 				if (act instanceof Escudo) {
-					System.out.println("weeeeeeee");
 					return act;
 				}
 			}

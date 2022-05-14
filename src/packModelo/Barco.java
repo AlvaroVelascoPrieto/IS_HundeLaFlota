@@ -93,18 +93,31 @@ public class Barco {
 		this.escudoTocado = false;
 	}
 	
-	public void tocarEscudo() {
+	public void tocarEscudo(Coordenada pCoord) {
 		if(this.escudoTocado) {
 			this.romperEscudo();
 		}
 		else {
 			this.escudoTocado = true;
+			Iterator<Coordenada> itr = this.getIterador();
+			while(itr.hasNext()) {
+				Coordenada act = itr.next();
+				if (act.esCoordenada(pCoord)) {
+					act.setEscudoTocado(true);
+				}
+			}
+			
 		}
 	}
 	
 	public void romperEscudo() {
 		this.escudo = false;
 		this.escudoTocado = false;
+		Iterator <Coordenada> itr = this.getIterador();
+		while(itr.hasNext()) {
+			Coordenada act = itr.next();
+			act.setEscudoTocado(false);
+		}
 	}
 	
 	public boolean getEscudo() {
